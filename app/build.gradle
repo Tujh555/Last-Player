@@ -9,7 +9,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.app.lastplayer"
+        applicationId "com.bignerdranch.android.trainingapp"
         minSdk 27
         targetSdk 32
         versionCode 1
@@ -30,6 +30,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
