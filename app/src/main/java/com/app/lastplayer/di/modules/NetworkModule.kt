@@ -1,7 +1,9 @@
 package com.app.lastplayer.di.modules
 
+import android.content.Context
 import com.app.lastplayer.Constants.BASE_JAMENDO_URL
 import com.app.lastplayer.api.jamendo.JamendoApi
+import com.bumptech.glide.Glide
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -16,4 +18,7 @@ class NetworkModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(JamendoApi::class.java)
+
+    @Provides
+    fun provideGlideRequestManager(context: Context) = Glide.with(context)
 }

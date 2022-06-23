@@ -5,6 +5,7 @@ import com.app.lastplayer.data.remote.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import kotlin.random.Random
 
 interface JamendoApi {
 
@@ -16,6 +17,12 @@ interface JamendoApi {
         @Path("tracks")
         tracks: String = ""
     ): JamendoResponse<Album>
+
+    @GET("albums/{tracks}?client_id=${CLIENT_ID}&format=json")
+    suspend fun getRandomAlbums(
+        @Query("offset")
+        offset: Int = Random.nextInt(200_000)
+    ) : JamendoResponse<Album>
 
     @GET("artists/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getAuthors(
@@ -37,9 +44,19 @@ interface JamendoApi {
 
     @GET("playlists/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getPlaylists(
-        @Query("namesearch") nameSearch: String,
+        @Query("namesearch")
+        nameSearch: String,
     ) : JamendoResponse<Playlist>
 
     @GET("feeds/?client_id=${CLIENT_ID}&format=json")
-    suspend fun getFeeds(@Query("limit") feedsCount: Int): JamendoResponse<JamendoFeed>
+    suspend fun getFeeds(
+        @Query("limit")
+        feedsCount: Int,
+
+        @Query("offset")
+        offset: Int,
+
+        @Query("type")
+        type: String = "news+update+interview"
+    ): JamendoResponse<JamendoFeed>
 }

@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface JamendoApiRepository {
     fun getAlbums(artistName: String): Flow<JamendoResponse<Album>>
+    fun getRandomAlbums(): Flow<JamendoResponse<Album>>
 }
