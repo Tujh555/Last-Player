@@ -1,14 +1,13 @@
 package com.app.lastplayer.usecases
 
+import com.app.lastplayer.data.remote.Author
 import com.app.lastplayer.data.remote.JamendoResponse
-import com.app.lastplayer.data.remote.Album
 import kotlinx.coroutines.flow.Flow
 
-interface GetAlbumsUseCase {
+interface GetAuthorsUseCase {
     operator fun invoke(
-        artistName: String = "",
         offset: Int = 0,
-        tracks: String = "",
+        trackPath: String = "",
         order: String = "popularity_week_desc"
-    ): Flow<JamendoResponse<Album>>
+    ): Flow<JamendoResponse<Author>>
 }

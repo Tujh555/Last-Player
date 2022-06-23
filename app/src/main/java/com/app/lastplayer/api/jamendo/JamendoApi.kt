@@ -5,41 +5,73 @@ import com.app.lastplayer.data.remote.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import kotlin.random.Random
 
 interface JamendoApi {
 
     @GET("albums/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getAlbums(
+        @Path("tracks")
+        tracks: String,
+
+        @Query("order")
+        order: String,
+
         @Query("artist_name")
         artistName: String,
 
-        @Path("tracks")
-        tracks: String = ""
+        @Query("offset")
+        offset: Int
     ): JamendoResponse<Album>
 
     @GET("artists/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getAuthors(
-        @Query("limit")
-        authorsCount: Int,
-
         @Path("tracks")
-        tracks: String = ""
+        tracks: String,
+
+        @Query("order")
+        order: String,
+
+        @Query("offset")
+        offset: Int
     ): JamendoResponse<Author>
 
     @GET("artists/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getAuthor(
-        @Query("name")
-        name: String,
-
         @Path("tracks")
-        tracks: String = ""
+        tracks: String,
+
+        @Query("name")
+        name: String
     ): JamendoResponse<Author>
 
     @GET("playlists/{tracks}?client_id=${CLIENT_ID}&format=json")
     suspend fun getPlaylists(
-        @Query("namesearch") nameSearch: String,
+        @Path("tracks")
+        tracks: String,
+
+        @Query("namesearch")
+        nameSearch: String,
+
+        @Query("order")
+        order: String,
+
+        @Query("offset")
+        offset: Int
     ) : JamendoResponse<Playlist>
 
     @GET("feeds/?client_id=${CLIENT_ID}&format=json")
-    suspend fun getFeeds(@Query("limit") feedsCount: Int): JamendoResponse<JamendoFeed>
+    suspend fun getFeeds(
+        @Query("limit")
+        feedsCount: Int,
+
+        @Query("offset")
+        offset: Int,
+
+        @Query("order")
+        order: String,
+
+        @Query("type")
+        type: String
+    ): JamendoResponse<JamendoFeed>
 }
