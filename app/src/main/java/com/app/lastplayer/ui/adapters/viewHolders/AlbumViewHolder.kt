@@ -5,6 +5,7 @@ import com.app.lastplayer.R
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.AlbumListItemBinding
+import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class AlbumViewHolder(
     private val binding: AlbumListItemBinding
@@ -12,7 +13,10 @@ class AlbumViewHolder(
 
     private val glideRequestManager by lazy { itemView.context.appComponent.glideRequestManager }
 
-    fun bind(_album: MainListData.AlbumItem) {
+    fun bind(
+        _album: MainListData.AlbumItem,
+        imageClickListener: ImageClickListener?
+    ) {
         val album = _album.item
 
         binding.run {
@@ -27,7 +31,7 @@ class AlbumViewHolder(
             dateOfRelease.text = album.releaseDate.replace("-", ".")
 
             albumImage.setOnClickListener {
-                TODO("Make album button listener")
+                imageClickListener?.onClick(album.id)
             }
         }
     }

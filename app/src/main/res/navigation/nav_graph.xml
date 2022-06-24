@@ -9,5 +9,17 @@
         android:id="@+id/mainFragment"
         android:name="com.app.lastplayer.ui.fragments.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_albumDetailedFragment"
+            app:destination="@id/albumDetailedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailedFragment"
+        android:name="com.app.lastplayer.ui.fragments.AlbumDetailedFragment"
+        android:label="AlbumDetailedFragment" >
+        <argument
+            android:name="albumId"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -74,4 +74,13 @@ interface JamendoApi {
         @Query("type")
         type: String
     ): JamendoResponse<JamendoFeed>
+
+    @GET("tracks/?client_id=${CLIENT_ID}&format=json")
+    suspend fun getTracks(
+        @Query("album_id")
+        albumId: String,
+
+        @Query("artist_name")
+        artistName: String
+    ): JamendoResponse<Track>
 }

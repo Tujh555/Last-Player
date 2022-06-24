@@ -8,9 +8,6 @@ data class Track(
 
     val image: String = "",
 
-    @SerializedName("shorturl")
-    val shortUrl: String = "",
-
     @SerializedName("shareurl")
     val shareUrl: String = "",
 
@@ -22,9 +19,6 @@ data class Track(
 
     @SerializedName("album_image")
     val albumImage: String = "",
-
-    @SerializedName("releasedate")
-    val releaseDate: String = "",
 
     @SerializedName("album_id")
     val albumId: String = "",

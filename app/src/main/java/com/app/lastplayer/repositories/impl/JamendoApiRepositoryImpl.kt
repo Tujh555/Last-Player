@@ -77,4 +77,14 @@ class JamendoApiRepositoryImpl @Inject constructor(
         )
     }
 
+    override fun getTracks(albumId: String, authorName: String): Flow<JamendoResponse<Track>> {
+        return flow {
+            emit(
+                jamendoApi.getTracks(
+                    albumId = albumId,
+                    artistName = authorName
+                )
+            )
+        }
+    }
 }

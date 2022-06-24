@@ -32,4 +32,9 @@ interface UseCasesModule {
     fun bindGetPlaylistsUseCase(
         getPlaylistsUseCaseImpl: GetPlaylistsUseCaseImpl
     ): GetPlaylistsUseCase
+
+    @Binds
+    fun bindGetTracksUseCase(
+        getTracksUseCaseImpl: GetTracksUseCaseImpl
+    ): GetTracksUseCase
 }

@@ -7,4 +7,7 @@ class JamendoResponse<T> (
 
     @SerializedName("results")
     val body: List<T>
-)
+) {
+    val isSuccessfull: Boolean
+        get() = headers.status == "success"
+}

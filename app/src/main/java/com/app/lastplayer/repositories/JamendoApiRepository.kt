@@ -28,4 +28,6 @@ interface JamendoApiRepository {
         type: String,
         order: String
     ): Flow<JamendoResponse<JamendoFeed>>
+
+    fun getTracks(albumId: String, authorName: String): Flow<JamendoResponse<Track>>
 }

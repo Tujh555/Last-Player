@@ -6,14 +6,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.data.MainListItem
 import com.app.lastplayer.databinding.ItemMainListBinding
+import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainViewHolder>() {
     private val mainListItems: MutableList<MainListItem> = mutableListOf()
+    private val imageClickListeners = mutableMapOf<Int, ImageClickListener>()
 
     fun setList(list: List<MainListItem>) {
         mainListItems.clear()
         mainListItems.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun setImageClickLisneterOn(dataTypeName: String, listener: ImageClickListener) {
+        when (dataTypeName.lowercase()) {
+            "album" -> {
+                imageClickListeners[MainListDataAdapter.DataType.ALBUM.ordinal] = listener
+            }
+            else -> throw IllegalArgumentException("Unknown Data Type")
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

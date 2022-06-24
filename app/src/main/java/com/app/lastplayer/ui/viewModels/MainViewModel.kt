@@ -1,12 +1,12 @@
 package com.app.lastplayer.ui.viewModels
 
-import android.media.DeniedByServerException
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.data.MainListItem
 import com.app.lastplayer.data.remote.*
+import com.app.lastplayer.requireSuccessful
 import com.app.lastplayer.usecases.GetAlbumsUseCase
 import com.app.lastplayer.usecases.GetAuthorsUseCase
 import com.app.lastplayer.usecases.GetFeedsUseCase
@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random.Default.nextInt
 
 class MainViewModel @Inject constructor(
     private val getAlbumsUseCase: GetAlbumsUseCase,
@@ -34,51 +33,47 @@ class MainViewModel @Inject constructor(
     }
 
     private val albumCollector = FlowCollector<JamendoResponse<Album>> { response ->
-        if (response.headers.status == "failed")
-            throw DeniedByServerException(response.headers.errorMessage)
-
-        items.add(
-            MainListItem(
-                title = "Albums",
-                response.body.map { album -> MainListData.AlbumItem(album) }
+        requireSuccessful(response) {
+            items.add(
+                MainListItem(
+                    title = "Albums",  //TODO resources
+                    body.map { album -> MainListData.AlbumItem(album) }
+                )
             )
-        )
+        }
     }
 
     private val authorsCollector = FlowCollector<JamendoResponse<Author>> { response ->
-        if (response.headers.status == "failed")
-            throw DeniedByServerException(response.headers.errorMessage)
-
-        items.add(
-            MainListItem(
-                title = "Authors",
-                response.body.map { author -> MainListData.AuthorItem(author) }
+        requireSuccessful(response) {
+            items.add(
+                MainListItem(
+                    title = "Authors",  //TODO resources
+                    body.map { author -> MainListData.AuthorItem(author) }
+                )
             )
-        )
+        }
     }
 
     private val playlistsCollector = FlowCollector<JamendoResponse<Playlist>> { response ->
-        if (response.headers.status == "failed")
-            throw DeniedByServerException(response.headers.errorMessage)
-
-        items.add(
-            MainListItem(
-                title = "Playlists",
-                response.body.map { playlist -> MainListData.PlaylistItem(playlist) }
+        requireSuccessful(response) {
+            items.add(
+                MainListItem(
+                    title = "Playlists",  //TODO resources
+                    response.body.map { playlist -> MainListData.PlaylistItem(playlist) }
+                )
             )
-        )
+        }
     }
 
     private val feedsCollector = FlowCollector<JamendoResponse<JamendoFeed>> { response ->
-        if (response.headers.status == "failed")
-            throw DeniedByServerException(response.headers.errorMessage)
-
-        items.add(
-            MainListItem(
-                title = "Feeds",
-                response.body.map { feed -> MainListData.FeedItem(feed) }.toMutableList()
+        requireSuccessful(response) {  //TODO try...catch
+            items.add(
+                MainListItem(
+                    title = "Feeds",  //TODO resources
+                    response.body.map { feed -> MainListData.FeedItem(feed) }.toMutableList()
+                )
             )
-        )
+        }
     }
 
     fun initListItems() {
