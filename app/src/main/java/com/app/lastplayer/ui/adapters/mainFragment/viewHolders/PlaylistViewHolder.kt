@@ -1,8 +1,7 @@
-package com.app.lastplayer.ui.adapters.viewHolders
+package com.app.lastplayer.ui.adapters.mainFragment.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
-import com.app.lastplayer.appComponent
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.PlaylistListItemBinding
 

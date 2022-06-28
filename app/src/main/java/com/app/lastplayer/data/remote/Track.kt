@@ -1,5 +1,6 @@
 package com.app.lastplayer.data.remote
 
+import com.app.lastplayer.data.TrackSharedData
 import com.google.gson.annotations.SerializedName
 
 data class Track(
@@ -37,4 +38,13 @@ data class Track(
     val name: String = "",
 
     val id: String = ""
-)
+) {
+    val sharedData: TrackSharedData
+        get() = TrackSharedData(
+            imageUrl = image,
+            trackName = name,
+            authorName = authorName,
+            trackUrl = audioUrl,
+            duration = duration
+        )
+}

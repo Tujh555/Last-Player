@@ -25,5 +25,5 @@ data class Playlist(
     @SerializedName("shareurl")
     val shareUrl: String,
 
-    val tracks: List<Track> = emptyList()
+    val tracks: List<Track> = emptyList(),
 )

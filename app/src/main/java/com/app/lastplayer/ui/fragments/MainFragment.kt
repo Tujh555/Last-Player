@@ -11,25 +11,38 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.lastplayer.R
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.data.MainListData
-import com.app.lastplayer.data.MainListItem
+import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.databinding.FragmentMainBinding
-import com.app.lastplayer.di.modules.viewModels.ViewModelFactory
-import com.app.lastplayer.ui.adapters.MainListAdapter
+import com.app.lastplayer.ui.adapters.mainFragment.MainListAdapter
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 import com.app.lastplayer.ui.viewModels.MainViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment() {
     private var binding: FragmentMainBinding? = null
     private val viewModel by viewModels<MainViewModel> { viewModelFactory }
     private val mainListAdapter by lazy { MainListAdapter() }
 
-    private val albumImageClickListener = ImageClickListener { albumId ->
-        MainFragmentDirections.actionMainFragmentToAlbumDetailedFragment(albumId).also {
+    private val seeMoreClickListener = MainListAdapter.SeeMoreClickListener { code, albums ->
+        val action = when (code) {
+            MainDataType.ALBUM.ordinal -> {
+                MainFragmentDirections.actionMainFragmentToMoreAlbumsFragment(
+                    albums.map { (it as MainListData.AlbumItem).item }.toTypedArray()
+                )
+            }
+            else -> throw IllegalArgumentException("Unknown data code")
+        }
+
+        findNavController().navigate(action)
+    }
+
+    private val albumImageClickListener = ImageClickListener { albumId, imageUrl ->
+        Log.d("MyLogs", albumId)
+
+        MainFragmentDirections.actionMainFragmentToAlbumDetailedFragment(albumId, imageUrl).also {
             findNavController().navigate(it)
         }
     }
@@ -60,7 +73,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainListAdapter.setImageClickLisneterOn("album", albumImageClickListener)
+        mainListAdapter.setImageClickListenerOn(
+            MainDataType.ALBUM.ordinal,
+            albumImageClickListener
+        )
+        mainListAdapter.seeMoreClickListener = seeMoreClickListener
+
         binding?.run {
             mainList.adapter = mainListAdapter
             mainList.layoutManager = LinearLayoutManager(requireContext())

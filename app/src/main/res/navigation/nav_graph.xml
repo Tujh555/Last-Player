@@ -13,13 +13,51 @@
         <action
             android:id="@+id/action_mainFragment_to_albumDetailedFragment"
             app:destination="@id/albumDetailedFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_moreAlbumsFragment"
+            app:destination="@id/moreAlbumsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/albumDetailedFragment"
         android:name="com.app.lastplayer.ui.fragments.AlbumDetailedFragment"
-        android:label="AlbumDetailedFragment" >
+        android:label="AlbumDetailedFragment"
+        tools:layout="@layout/fragment_detailed_album">
         <argument
             android:name="albumId"
             app:argType="string" />
+        <argument
+            android:name="albumImage"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_albumDetailedFragment_to_playTrackDialogFragment2"
+            app:destination="@id/playTrackDialogFragment2" />
     </fragment>
+
+    <fragment
+        android:id="@+id/moreAlbumsFragment"
+        android:name="com.app.lastplayer.ui.fragments.MoreAlbumsFragment"
+        android:label="MoreAlbumsFragment"
+        tools:layout="@layout/fragment_more_albums">
+        <action
+            android:id="@+id/action_moreAlbumsFragment_to_albumDetailedFragment"
+            app:destination="@id/albumDetailedFragment" />
+        <argument
+            android:name="albumsList"
+            app:argType="com.app.lastplayer.data.remote.Album[]" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/playTrackDialogFragment2"
+        android:name="com.app.lastplayer.ui.fragments.PlayTrackDialogFragment"
+        android:label="PlayTrackDialogFragment"
+        tools:layout="@layout/play_bottom_sheet">
+        <argument
+            android:name="tracksData"
+            app:argType="com.app.lastplayer.data.TrackSharedData[]" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </dialog>
+
 </navigation>

@@ -24,7 +24,7 @@ class AlbumDetailedViewModel @Inject constructor(
         Log.e("MyLogs", "$throwable in $coroutineContext")
     }
 
-    fun getTracks(albumId: String) {
+    fun getTracksFromAlbum(albumId: String) {
         viewModelScope.launch(exceptionHandler) {
             getTracksUseCase(albumId = albumId).collect { response ->
                 _tracksList.emit(requireBody(response))  //TODO try...catch

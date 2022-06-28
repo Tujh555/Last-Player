@@ -1,4 +1,4 @@
-package com.app.lastplayer.ui.adapters.viewHolders
+package com.app.lastplayer.ui.adapters.mainFragment.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
@@ -31,7 +31,7 @@ class AlbumViewHolder(
             dateOfRelease.text = album.releaseDate.replace("-", ".")
 
             albumImage.setOnClickListener {
-                imageClickListener?.onClick(album.id)
+                imageClickListener?.onClick(album.id, album.image)
             }
         }
     }

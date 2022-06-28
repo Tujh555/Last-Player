@@ -13,6 +13,7 @@
         app:layout_constraintGuide_begin="230dp" />
 
     <ImageView
+        android:id="@+id/albumImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ic_launcher_background"

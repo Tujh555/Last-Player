@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.app.lastplayer.ui.viewModels.AlbumDetailedViewModel
 import com.app.lastplayer.ui.viewModels.MainViewModel
+import com.app.lastplayer.ui.viewModels.MoreAlbumsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -21,5 +22,10 @@ interface ViewModelModule {
     @IntoMap
     @Binds
     @ViewModelKey(AlbumDetailedViewModel::class)
-    fun bindAlbumDetailedViewModel(viewModel: AlbumDetailedViewModel): ViewModelProvider.Factory
+    fun bindAlbumDetailedViewModel(viewModel: AlbumDetailedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(MoreAlbumsViewModel::class)
+    fun bindMoreAlbumsViewModel(viewModel: MoreAlbumsViewModel): ViewModel
 }

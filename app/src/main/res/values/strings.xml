@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Last Player</string>
+    <string name="see_more_text">See more...</string>
+    <string name="more_albums_title_text">Listen to the most popular albums with Last Player!</string>
 </resources>

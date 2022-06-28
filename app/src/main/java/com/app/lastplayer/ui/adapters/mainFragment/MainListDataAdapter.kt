@@ -1,4 +1,4 @@
-package com.app.lastplayer.ui.adapters
+package com.app.lastplayer.ui.adapters.mainFragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,15 +8,16 @@ import com.app.lastplayer.databinding.AlbumListItemBinding
 import com.app.lastplayer.databinding.AuthorListItemBinding
 import com.app.lastplayer.databinding.FeedListItemBinding
 import com.app.lastplayer.databinding.PlaylistListItemBinding
+import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
-import com.app.lastplayer.ui.adapters.viewHolders.AlbumViewHolder
-import com.app.lastplayer.ui.adapters.viewHolders.AuthorViewHolder
-import com.app.lastplayer.ui.adapters.viewHolders.FeedViewHolder
-import com.app.lastplayer.ui.adapters.viewHolders.PlaylistViewHolder
+import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.AlbumViewHolder
+import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.AuthorViewHolder
+import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.FeedViewHolder
+import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.PlaylistViewHolder
 
 class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mainDataList = mutableListOf<MainListData>()
-    private val types = DataType.values().map { it.ordinal }.toSet()
+    private val types = MainDataType.values().map { it.ordinal }.toSet()
     private val imageClickListeners = mutableMapOf<Int, ImageClickListener>()
 
     fun setList(list: List<MainListData>) {
@@ -38,10 +39,10 @@ class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
 
         return when (mainDataList[position]) {
-            is MainListData.AlbumItem -> DataType.ALBUM.ordinal
-            is MainListData.AuthorItem -> DataType.AUTHOR.ordinal
-            is MainListData.FeedItem -> DataType.FEED.ordinal
-            is MainListData.PlaylistItem -> DataType.PLAYLIST.ordinal
+            is MainListData.AlbumItem -> MainDataType.ALBUM.ordinal
+            is MainListData.AuthorItem -> MainDataType.AUTHOR.ordinal
+            is MainListData.FeedItem -> MainDataType.FEED.ordinal
+            is MainListData.PlaylistItem -> MainDataType.PLAYLIST.ordinal
         }
     }
 
@@ -49,23 +50,23 @@ class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            DataType.ALBUM.ordinal -> {
+            MainDataType.ALBUM.ordinal -> {
                 val binding = AlbumListItemBinding.inflate(inflater, parent, false)
                 AlbumViewHolder(binding)
             }
-            DataType.AUTHOR.ordinal -> {
+            MainDataType.AUTHOR.ordinal -> {
                 val binding = AuthorListItemBinding.inflate(inflater, parent, false)
                 AuthorViewHolder(binding)
             }
-            DataType.FEED.ordinal -> {
+            MainDataType.FEED.ordinal -> {
                 val binding = FeedListItemBinding.inflate(inflater, parent, false)
                 FeedViewHolder(binding)
             }
-            DataType.PLAYLIST.ordinal -> {
+            MainDataType.PLAYLIST.ordinal -> {
                 val binding = PlaylistListItemBinding.inflate(inflater, parent, false)
                 PlaylistViewHolder(binding)
             }
-            else -> throw IllegalArgumentException("Unknown DataType, onCreateViewHolder")
+            else -> throw IllegalArgumentException("Unknown MainDataType, onCreateViewHolder")
         }
     }
 
@@ -73,27 +74,23 @@ class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = mainDataList[position]
 
         when (holder.itemViewType) {
-            DataType.ALBUM.ordinal -> {
+            MainDataType.ALBUM.ordinal -> {
                 (holder as AlbumViewHolder).bind(
                     item as MainListData.AlbumItem,
                     imageClickListeners[holder.itemViewType]
                 )
             }
-            DataType.AUTHOR.ordinal -> {
+            MainDataType.AUTHOR.ordinal -> {
                 (holder as AuthorViewHolder).bind(item as MainListData.AuthorItem)
             }
-            DataType.FEED.ordinal -> {
+            MainDataType.FEED.ordinal -> {
                 (holder as FeedViewHolder).bind(item as MainListData.FeedItem)
             }
-            DataType.PLAYLIST.ordinal -> {
+            MainDataType.PLAYLIST.ordinal -> {
                 (holder as PlaylistViewHolder).bind(item as MainListData.PlaylistItem)
             }
         }
     }
 
     override fun getItemCount() = mainDataList.size
-
-    enum class DataType {
-        ALBUM, AUTHOR, FEED, PLAYLIST
-    }
 }
