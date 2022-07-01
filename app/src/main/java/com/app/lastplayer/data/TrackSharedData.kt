@@ -8,9 +8,11 @@ class TrackSharedData(
     val trackName: String = "",
     val authorName: String = "",
     val trackUrl: String = "",
-    val duration: String = ""
+    val duration: String = "",
+    val albumName: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -24,6 +26,7 @@ class TrackSharedData(
         parcel.writeString(authorName)
         parcel.writeString(trackUrl)
         parcel.writeString(duration)
+        parcel.writeString(albumName)
     }
 
     override fun describeContents() = 0

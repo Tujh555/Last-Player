@@ -5,7 +5,10 @@ import dagger.Module
 
 @Module(
     includes = [
-        NetworkModule::class, RepositoryModule::class, ViewModelModule::class
+        NetworkModule::class,
+        RepositoryModule::class,
+        ViewModelModule::class,
+        MediaModule::class,
     ]
 )
 interface MainModule

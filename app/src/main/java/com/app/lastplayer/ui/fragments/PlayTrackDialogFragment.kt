@@ -1,74 +1,115 @@
 package com.app.lastplayer.ui.fragments
 
-import android.app.Dialog
+import android.content.ComponentName
 import android.content.Context
+import android.content.Context.BIND_AUTO_CREATE
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
+import android.os.RemoteException
+import android.support.v4.media.session.MediaControllerCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.navArgs
 import com.app.lastplayer.R
 import com.app.lastplayer.appComponent
-import com.app.lastplayer.data.TrackSharedData
 import com.app.lastplayer.databinding.PlayBottomSheetBinding
+import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.toTrackDuration
 import com.bumptech.glide.RequestManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
 class PlayTrackDialogFragment : BottomSheetDialogFragment() {
-    private var binding: PlayBottomSheetBinding? = null
     private val args by navArgs<PlayTrackDialogFragmentArgs>()
-    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            Log.d("MyLogs", "SlideState = $newState")
-        }
 
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            Log.d("MyLogs", "OnSlide offset = $slideOffset")
+    private val mediaControllerCallback = object : MediaControllerCompat.Callback() {
+        override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
+            super.onPlaybackStateChanged(state)
 
-            binding?.run {
-                when {
-                    slideOffset > 0 -> {
-                        layoutCollapsed.alpha = 1 - 1.85f * slideOffset
-                        layoutExpanded.alpha = slideOffset * slideOffset
-                    }
+            state?.let {
+                val isPlaying = it.state == PlaybackStateCompat.STATE_PLAYING
+                Log.d("MyLogs", "play button isEnabled = $isPlaying")
 
-                    slideOffset > 0.6 -> {
-                        layoutCollapsed.visibility = View.GONE
-                        layoutExpanded.visibility = View.VISIBLE
-                    }
-
-                    slideOffset < 0.6 && layoutExpanded.visibility == View.VISIBLE -> {
-                        layoutExpanded.visibility = View.GONE
-                        layoutCollapsed.visibility = View.VISIBLE
-                    }
+                binding?.run {
+                    playButton.isEnabled = isPlaying
                 }
             }
         }
     }
 
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
+            playbackBinder = p1 as PlaybackService.PlaybackServiceBinder
+
+            try {
+                playbackBinder?.let { binder ->
+                    mediaController = MediaControllerCompat(
+                        requireContext(),
+                        binder.mediaSessionToken
+                    )
+
+                    mediaController?.registerCallback(mediaControllerCallback)
+
+                    mediaControllerCallback.onPlaybackStateChanged(
+                        mediaController?.playbackState
+                    )
+
+                    playbackService = playbackBinder?.getService() as PlaybackService
+
+                    playbackService?.run {
+                        refreshTrackList(args.tracksData.toList(), args.position)
+                    }
+
+                    Log.d("MyLogs", "in serviceConnection $binder")
+                }
+            } catch (e: RemoteException) {
+                mediaController = null
+            }
+        }
+
+        override fun onServiceDisconnected(p0: ComponentName?) {
+            playbackBinder = null
+            Log.d("MyLogs", "onServiceDisconnected")
+
+            if (mediaController != null) {
+                mediaController?.unregisterCallback(mediaControllerCallback)
+                mediaController = null
+            }
+        }
+
+    }
+
     @Inject
     lateinit var glideRequestManager: RequestManager
+
+    private var binding: PlayBottomSheetBinding? = null
+    private var playbackBinder: PlaybackService.PlaybackServiceBinder? = null
+        get() = requireNotNull(field)
+    private var mediaController: MediaControllerCompat? = null
+    private var playbackService: PlaybackService? = null
+
+    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context.appComponent.inject(this)
     }
 
-    override fun getTheme(): Int {
-        Log.d("MyLogs", "getTheme()")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        return R.style.AppBottomSheetDialogTheme
-    }
+        requireActivity().bindService(
+            Intent(requireContext(), PlaybackService::class.java),
+            serviceConnection,
+            BIND_AUTO_CREATE
+        )
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        super.show(manager, tag)
-        Log.d("MyLogs", "show")
+        Log.d("MyLogs", "in Fragment OnCreate ${args.tracksData.size}")
     }
 
     override fun onCreateView(
@@ -85,51 +126,50 @@ class PlayTrackDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val trackArgs = args.tracksData[args.position]
 
-        Log.d("MyLogs", args.tracksData.joinToString { it.toString() })
-
         binding?.run {
             glideRequestManager.load(trackArgs.imageUrl)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(trackImage)
 
-            trackNameCollapsed.text = trackArgs.trackName
             trackName.text = trackArgs.trackName
 
-            authorNameCollapsed.text = trackArgs.authorName
             authorName.text = trackArgs.authorName
 
             elapsedTime.text = "0:00"
             trackDuration.text = trackArgs.duration.toTrackDuration()
+
+            playButton.setOnClickListener {
+                mediaController?.let { controller ->
+                    if (playButton.isEnabled) {
+                        Log.d("MyLogs", "PlayButtonListener ${playButton.isEnabled}")
+                        controller.transportControls.pause()
+                    } else {
+                        controller.transportControls.play()
+                    }
+                }
+            }
+
+            nextButton.setOnClickListener {
+                mediaController?.transportControls?.skipToNext()
+            }
+
+            previousButton.setOnClickListener {
+                mediaController?.transportControls?.skipToPrevious()
+            }
         }
-
-        Log.d("MyLogs", binding?.trackName?.text.toString())
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val density = requireContext().resources.displayMetrics.density
-
-        dialog?.let { playDialog ->
-            val bottomSheet = playDialog
-                .findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-            val behavior = BottomSheetBehavior.from(bottomSheet)
-
-            behavior.peekHeight = (COLLAPSED_HEIGHT * density).toInt()
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            Log.d("MyLogs", "onCreateDialog() ${behavior.peekHeight}")
-            behavior.addBottomSheetCallback(bottomSheetCallback)
-        }
-
-        return super.onCreateDialog(savedInstanceState)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        playbackBinder = null
 
+        if (mediaController != null) {
+            mediaController?.unregisterCallback(mediaControllerCallback)
+            mediaController = null
+        }
+
+        playbackService?.let { requireActivity().unbindService(serviceConnection)}
         binding = null
-    }
-
-    companion object {
-        private const val COLLAPSED_HEIGHT = 60
     }
 }

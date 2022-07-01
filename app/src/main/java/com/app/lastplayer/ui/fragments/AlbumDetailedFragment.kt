@@ -2,6 +2,7 @@ package com.app.lastplayer.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.lastplayer.R
+import com.app.lastplayer.ServiceConnector
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.data.TrackSharedData
 import com.app.lastplayer.databinding.FragmentDetailedAlbumBinding
@@ -32,13 +34,9 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
     }
     private val navArgs by navArgs<AlbumDetailedFragmentArgs>()
     private val trackClickListener = TrackClickListener { data, position ->
-        val action = AlbumDetailedFragmentDirections
-            .actionAlbumDetailedFragmentToPlayTrackDialogFragment2(
-                data.toTypedArray(),
-                position
-            )
-
-        findNavController().navigate(action)
+        val connector = requireActivity() as ServiceConnector
+        Log.d("MyLogs", "AlbumDetailedFragment trackClickListener")
+        connector.onClickTrack(data, position)
     }
 
     @Inject

@@ -72,4 +72,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.1"
+
+    // Media
+    implementation "androidx.media:media:1.6.0"
+
+    // ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.0'
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.18.0'
 }

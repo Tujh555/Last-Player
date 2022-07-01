@@ -1,8 +1,9 @@
 package com.app.lastplayer.di
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
+import android.support.v4.media.MediaMetadataCompat
 import com.app.lastplayer.di.modules.MainModule
+import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.AlbumDetailedFragment
 import com.app.lastplayer.ui.fragments.MainFragment
 import com.app.lastplayer.ui.fragments.MoreAlbumsFragment
@@ -19,8 +20,10 @@ interface AppComponent {
     fun inject(fragment: AlbumDetailedFragment)
     fun inject(fragment: MoreAlbumsFragment)
     fun inject(bottomSheetDialog: PlayTrackDialogFragment)
+    fun inject(playbackService: PlaybackService)
 
     val glideRequestManager: RequestManager
+    val metadataBuilder: MediaMetadataCompat.Builder
 
     @Component.Builder
     interface Builder {
