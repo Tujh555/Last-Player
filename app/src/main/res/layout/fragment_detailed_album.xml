@@ -36,21 +36,12 @@
         app:layout_constraintBottom_toTopOf="@id/topGuideline"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/button_add_foreground"
-        android:background="@drawable/button_add_background"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/topGuideline"
-        app:layout_constraintEnd_toStartOf="@id/playButton"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumTracksList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="15dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

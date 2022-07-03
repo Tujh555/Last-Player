@@ -5,5 +5,5 @@ import com.app.lastplayer.data.remote.Track
 import kotlinx.coroutines.flow.Flow
 
 interface GetTracksUseCase {
-    operator fun invoke(albumId: String = "", authorName: String = ""): Flow<JamendoResponse<Track>>
+    operator fun invoke(albumId: String = "", authorId: String = ""): Flow<JamendoResponse<Track>>
 }

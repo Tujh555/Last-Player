@@ -1,15 +1,19 @@
-package com.app.lastplayer.ui.adapters.mainFragment.viewHolders
+package com.app.lastplayer.ui.adapters.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.PlaylistListItemBinding
+import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class PlaylistViewHolder(
     private val binding: PlaylistListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(_playlist: MainListData.PlaylistItem) {
+    fun bind(
+        _playlist: MainListData.PlaylistItem,
+        imageClickListener: ImageClickListener?
+    ) {
         val playlist = _playlist.item
 
         binding.run {
@@ -20,7 +24,10 @@ class PlaylistViewHolder(
             playlistImage.setImageResource(R.drawable.ic_launcher_background)  // TODO(Make placeholder)
 
             playlistImage.setOnClickListener {
-                TODO("Make playlist image click listener")
+                imageClickListener?.onClick(
+                    playlist.id,
+                    "",
+                )
             }
         }
     }

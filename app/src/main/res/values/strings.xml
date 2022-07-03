@@ -1,11 +1,34 @@
 <resources>
     <string name="app_name">Last Player</string>
     <string name="see_more_text">See more…</string>
-    <string name="more_albums_title_text">Listen to the most popular albums with Last Player!</string>
+    <string name="more_albums_title_text">The most popular albums</string>
     <string name="previous">Previous</string>
 
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
     <string name="next">Next</string>
+    <string name="the_most_popular_authors_text">The most popular Authors</string>
+    <string name="the_most_popular_playlists_text">The most popular Playlists</string>
+    <string name="home_text">Home</string>
+    <string name="favorites_text">Favorites</string>
+    <string name="account_text">Account</string>
+    <string name="search_text">Search</string>
+    <string name="search_music_text">Search music, authors etc…</string>
+    <string name="your_tracks_text">Your tracks</string>
+    <string name="search_yor_tracks_text">Search yor tracks</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="register_text">Sign in</string>
+    <string name="login_text">Log in</string>
+    <string name="favorites_unregistered_text">Your added tracks will be displayed here if you register or log in.</string>
+    <string name="sign_in_or_sign_up_text">Sign in or Sign up</string>
+    <string name="account_tv_text">Account</string>
+    <string name="change_password_text">Change password</string>
+    <string name="change_email_text">Change email</string>
+    <string name="sign_out_text">Sign out</string>
+    <string name="submit_text">Submit</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="email_password_text">Email / Password</string>
+    <string name="change_your_data_text">Change your data</string>
 </resources>

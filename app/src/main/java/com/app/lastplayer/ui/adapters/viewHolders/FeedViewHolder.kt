@@ -1,17 +1,21 @@
-package com.app.lastplayer.ui.adapters.mainFragment.viewHolders
+package com.app.lastplayer.ui.adapters.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.FeedListItemBinding
+import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class FeedViewHolder(
     private val binding: FeedListItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     private val glideRequestManager by lazy { itemView.context.appComponent.glideRequestManager }
 
-    fun bind(_feed: MainListData.FeedItem) {
+    fun bind(
+        _feed: MainListData.FeedItem,
+        imageClickListener: ImageClickListener?
+    ) {
         val feed = _feed.item
 
         binding.run {
@@ -36,6 +40,13 @@ class FeedViewHolder(
                     text.english.isNotBlank() -> feedText.text = text.english
                     else -> feedText.text = "empty"
                 }
+            }
+
+            feedImage.setOnClickListener {
+                imageClickListener?.onClick(
+                    feedText.text.toString(),
+                    feed.images?.size315_111 ?: ""
+                )
             }
         }
     }

@@ -4,12 +4,14 @@ import android.content.Context
 import com.app.lastplayer.Constants.BASE_JAMENDO_URL
 import com.app.lastplayer.api.jamendo.JamendoApi
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
-@Module(includes = [ UseCasesModule::class ])
+@Module(includes = [ UseCasesModule::class, PagingModule::class ])
 class NetworkModule {
 
     @Provides
@@ -21,4 +23,8 @@ class NetworkModule {
 
     @Provides
     fun provideGlideRequestManager(context: Context) = Glide.with(context)
+
+    @Singleton
+    @Provides
+    fun provideAuthentication() = FirebaseAuth.getInstance()
 }

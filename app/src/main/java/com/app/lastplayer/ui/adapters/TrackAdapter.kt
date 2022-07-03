@@ -1,4 +1,4 @@
-package com.app.lastplayer.ui.adapters.albumDetailedFragment
+package com.app.lastplayer.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,9 +11,9 @@ import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 
-class AlbumTrackAdapter @Inject constructor(
+class TrackAdapter @Inject constructor(
     private val glideRequestManager: RequestManager
-) : RecyclerView.Adapter<AlbumTrackAdapter.TrackViewHolder>() {
+) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     private val trackList = mutableListOf<Track>()
     var trackClickListener: TrackClickListener? = null
 
@@ -51,7 +51,7 @@ class AlbumTrackAdapter @Inject constructor(
                 trackImage.setOnClickListener {
                     trackClickListener?.click(
                         trackList.map { it.sharedData },
-                        adapterPosition
+                        bindingAdapterPosition
                     )
                 }
 

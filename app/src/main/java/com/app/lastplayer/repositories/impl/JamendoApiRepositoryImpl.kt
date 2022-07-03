@@ -3,88 +3,72 @@ package com.app.lastplayer.repositories.impl
 import com.app.lastplayer.api.jamendo.JamendoApi
 import com.app.lastplayer.data.remote.*
 import com.app.lastplayer.repositories.JamendoApiRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class JamendoApiRepositoryImpl @Inject constructor(
     private val jamendoApi: JamendoApi
 ) : JamendoApiRepository {
-    override fun getAlbums(
+    override suspend fun getAlbums(
         authorName: String,
         offset: Int,
         trackPath: String,
         order: String
-    ): Flow<JamendoResponse<Album>> = flow {
-        emit(
-            jamendoApi.getAlbums(
-                artistName = authorName,
-                offset = offset,
-                tracks = trackPath,
-                order = order
-            )
+    ): JamendoResponse<Album> {
+        return jamendoApi.getAlbums(
+            artistName = authorName,
+            tracks = trackPath,
+            offset = offset,
+            order = order,
         )
     }
 
-    override fun getAuthors(offset: Int, trackPath: String, order: String): Flow<JamendoResponse<Author>> = flow {
-        emit(
-            jamendoApi.getAuthors(
-                offset = offset,
-                tracks = trackPath,
-                order = order
-            )
+    override suspend fun getAuthors(offset: Int, trackPath: String, order: String): JamendoResponse<Author> {
+        return jamendoApi.getAuthors(
+            offset = offset,
+            tracks = trackPath,
+            order = order
         )
     }
 
-    override fun getAuthor(name: String, trackPath: String): Flow<JamendoResponse<Author>> = flow {
-        emit(
-            jamendoApi.getAuthor(
-                name = name,
-                tracks = trackPath,
-            )
+    override suspend fun getAuthor(name: String, trackPath: String): JamendoResponse<Author> {
+        return jamendoApi.getAuthor(
+            name = name,
+            tracks = trackPath,
         )
     }
 
-    override fun getPlaylists(
-        playlistName: String,
+    override suspend fun getPlaylists(
+        playlistId: String,
         offset: Int,
         trackPath: String,
         order: String
-    ): Flow<JamendoResponse<Playlist>> = flow {
-        emit(
-            jamendoApi.getPlaylists(
-                nameSearch = playlistName,
-                offset = offset,
-                tracks = trackPath,
-                order = order
-            )
+    ): JamendoResponse<Playlist> {
+        return jamendoApi.getPlaylists(
+            id = playlistId,
+            offset = offset,
+            tracks = trackPath,
+            order = order
         )
     }
 
-    override fun getFeeds(
+    override suspend fun getFeeds(
         limit: Int,
         offset: Int,
         type: String,
         order: String
-    ): Flow<JamendoResponse<JamendoFeed>> = flow {
-        emit(
-            jamendoApi.getFeeds(
-                feedsCount = limit,
-                offset = offset,
-                type = type,
-                order = order
-            )
+    ): JamendoResponse<JamendoFeed> {
+        return jamendoApi.getFeeds(
+            feedsCount = limit,
+            offset = offset,
+            type = type,
+            order = order
         )
     }
 
-    override fun getTracks(albumId: String, authorName: String): Flow<JamendoResponse<Track>> {
-        return flow {
-            emit(
-                jamendoApi.getTracks(
-                    albumId = albumId,
-                    artistName = authorName
-                )
-            )
-        }
+    override suspend fun getTracks(albumId: String, authorId: String): JamendoResponse<Track> {
+        return jamendoApi.getTracks(
+            albumId = albumId,
+            artistId = authorId
+        )
     }
 }

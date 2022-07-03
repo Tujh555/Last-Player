@@ -2,9 +2,13 @@ package com.app.lastplayer.di.modules.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.app.lastplayer.ui.viewModels.AlbumDetailedViewModel
+import com.app.lastplayer.ui.viewModels.detailed.AlbumDetailedViewModel
+import com.app.lastplayer.ui.viewModels.detailed.AuthorDetailedViewModel
 import com.app.lastplayer.ui.viewModels.MainViewModel
-import com.app.lastplayer.ui.viewModels.MoreAlbumsViewModel
+import com.app.lastplayer.ui.viewModels.detailed.PlaylistDetailedViewModel
+import com.app.lastplayer.ui.viewModels.more.MoreAlbumsViewModel
+import com.app.lastplayer.ui.viewModels.more.MoreAuthorsViewModel
+import com.app.lastplayer.ui.viewModels.more.MorePlaylistsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -28,4 +32,24 @@ interface ViewModelModule {
     @Binds
     @ViewModelKey(MoreAlbumsViewModel::class)
     fun bindMoreAlbumsViewModel(viewModel: MoreAlbumsViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(AuthorDetailedViewModel::class)
+    fun bindAuthorDetailedViewModel(viewModel: AuthorDetailedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(MoreAuthorsViewModel::class)
+    fun bindMoreAuthorsViewModel(viewModel: MoreAuthorsViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(PlaylistDetailedViewModel::class)
+    fun bindPlaylistDetailedViewModel(viewModel: PlaylistDetailedViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(MorePlaylistsViewModel::class)
+    fun bindMorePlaylistsViewModel(viewModel: MorePlaylistsViewModel): ViewModel
 }

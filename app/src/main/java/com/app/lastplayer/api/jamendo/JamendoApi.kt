@@ -5,6 +5,7 @@ import com.app.lastplayer.data.remote.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Url
 import kotlin.random.Random
 
 interface JamendoApi {
@@ -50,8 +51,8 @@ interface JamendoApi {
         @Path("tracks")
         tracks: String,
 
-        @Query("namesearch")
-        nameSearch: String,
+        @Query("id")
+        id: String,
 
         @Query("order")
         order: String,
@@ -80,7 +81,7 @@ interface JamendoApi {
         @Query("album_id")
         albumId: String,
 
-        @Query("artist_name")
-        artistName: String
+        @Query("artist_id")
+        artistId: String,
     ): JamendoResponse<Track>
 }

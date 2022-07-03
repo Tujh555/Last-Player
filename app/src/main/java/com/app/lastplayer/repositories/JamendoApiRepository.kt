@@ -4,30 +4,30 @@ import com.app.lastplayer.data.remote.*
 import kotlinx.coroutines.flow.Flow
 
 interface JamendoApiRepository {
-    fun getAlbums(
+    suspend fun getAlbums(
         authorName: String,
         offset: Int,
         trackPath: String,
         order: String
-    ): Flow<JamendoResponse<Album>>
+    ): JamendoResponse<Album>
 
-    fun getAuthors(offset: Int, trackPath: String, order: String): Flow<JamendoResponse<Author>>
+    suspend  fun getAuthors(offset: Int, trackPath: String, order: String): JamendoResponse<Author>
 
-    fun getAuthor(name: String, trackPath: String): Flow<JamendoResponse<Author>>
+    suspend  fun getAuthor(name: String, trackPath: String): JamendoResponse<Author>
 
-    fun getPlaylists(
-        playlistName: String,
+    suspend  fun getPlaylists(
+        playlistId: String,
         offset: Int,
         trackPath: String,
         order: String
-    ): Flow<JamendoResponse<Playlist>>
+    ): JamendoResponse<Playlist>
 
-    fun getFeeds(
+    suspend  fun getFeeds(
         limit: Int,
         offset: Int,
         type: String,
         order: String
-    ): Flow<JamendoResponse<JamendoFeed>>
+    ): JamendoResponse<JamendoFeed>
 
-    fun getTracks(albumId: String, authorName: String): Flow<JamendoResponse<Track>>
+    suspend  fun getTracks(albumId: String, authorId: String): JamendoResponse<Track>
 }

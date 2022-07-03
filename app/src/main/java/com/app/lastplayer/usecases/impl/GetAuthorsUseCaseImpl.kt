@@ -6,6 +6,7 @@ import com.app.lastplayer.repositories.JamendoApiRepository
 import com.app.lastplayer.usecases.GetAuthorsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -16,9 +17,10 @@ class GetAuthorsUseCaseImpl @Inject constructor(
         offset: Int,
         trackPath: String,
         order: String
-    ): Flow<JamendoResponse<Author>> {
-        return jamendoApiRepository
-            .getAuthors(offset = offset, trackPath = trackPath, order = order)
-            .flowOn(Dispatchers.IO)
-    }
+    ): Flow<JamendoResponse<Author>> = flow {
+        emit(
+            jamendoApiRepository
+                .getAuthors(offset = offset, trackPath = trackPath, order = order)
+        )
+    }.flowOn(Dispatchers.IO)
 }

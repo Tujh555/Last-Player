@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "30479475432",
+    "firebase_url": "https://last-player-default-rtdb.firebaseio.com",
+    "project_id": "last-player",
+    "storage_bucket": "last-player.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30479475432:android:1509bc1de495695bed9f5d",
+        "android_client_info": {
+          "package_name": "com.bignerdranch.android.trainingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30479475432-kdieklbtuok6cp3u2p7q6ugc19m0srhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDys1z2DbA-z9wBfwH-s9scTA96k0tkULs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30479475432-kdieklbtuok6cp3u2p7q6ugc19m0srhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

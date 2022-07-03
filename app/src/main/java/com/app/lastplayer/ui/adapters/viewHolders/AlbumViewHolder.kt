@@ -1,4 +1,4 @@
-package com.app.lastplayer.ui.adapters.mainFragment.viewHolders
+package com.app.lastplayer.ui.adapters.viewHolders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R

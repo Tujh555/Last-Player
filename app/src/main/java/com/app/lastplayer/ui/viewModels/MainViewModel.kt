@@ -38,7 +38,7 @@ class MainViewModel @Inject constructor(
         requireSuccessful(response) {
             items.add(
                 MainListItem(
-                    title = "Albums",  //TODO resources
+                    title = "Albums",
                     body.map { album -> MainListData.AlbumItem(album) },
                     MainDataType.ALBUM.ordinal
                 )
@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor(
         requireSuccessful(response) {
             items.add(
                 MainListItem(
-                    title = "Playlists",  //TODO resources
+                    title = "Playlists",
                     response.body.map { playlist -> MainListData.PlaylistItem(playlist) },
                     MainDataType.PLAYLIST.ordinal
                 )
@@ -71,10 +71,10 @@ class MainViewModel @Inject constructor(
     }
 
     private val feedsCollector = FlowCollector<JamendoResponse<JamendoFeed>> { response ->
-        requireSuccessful(response) {  //TODO try...catch
+        requireSuccessful(response) {
             items.add(
                 MainListItem(
-                    title = "Feeds",  //TODO resources
+                    title = "Feeds",
                     response.body.map { feed -> MainListData.FeedItem(feed) }.toMutableList(),
                     MainDataType.FEED.ordinal
                 )
@@ -91,13 +91,13 @@ class MainViewModel @Inject constructor(
 
     fun initListItems() {
         viewModelScope.launch(exceptionHandler) {
-            getAlbumsUseCase(order = "").collect(albumCollector)
+            getAlbumsUseCase().collect(albumCollector)
 
-            getAuthorsUseCase(order = "").collect(authorsCollector)
+            getAuthorsUseCase().collect(authorsCollector)
 
-            getPlaylistsUseCase(order = "").collect(playlistsCollector)
+            getPlaylistsUseCase().collect(playlistsCollector)
 
-            getFeedsUseCase(order = "").collect(feedsCollector)
+            getFeedsUseCase().collect(feedsCollector)
 
             _mainListItems.emit(items)
         }

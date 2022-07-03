@@ -16,11 +16,29 @@
         <action
             android:id="@+id/action_mainFragment_to_moreAlbumsFragment"
             app:destination="@id/moreAlbumsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_moreAuthorsFragment"
+            app:destination="@id/moreAuthorsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_authorDetailedFragment"
+            app:destination="@id/authorDetailedFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_moreFeedsFragment"
+            app:destination="@id/moreFeedsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_feedDetailedFragment"
+            app:destination="@id/feedDetailedFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_morePlaylistsFragment"
+            app:destination="@id/morePlaylistsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_playlistDetailedFragment"
+            app:destination="@id/playlistDetailedFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/albumDetailedFragment"
-        android:name="com.app.lastplayer.ui.fragments.AlbumDetailedFragment"
+        android:name="com.app.lastplayer.ui.fragments.detailed.AlbumDetailedFragment"
         android:label="AlbumDetailedFragment"
         tools:layout="@layout/fragment_detailed_album">
         <argument
@@ -29,35 +47,114 @@
         <argument
             android:name="albumImage"
             app:argType="string" />
-        <action
-            android:id="@+id/action_albumDetailedFragment_to_playTrackDialogFragment2"
-            app:destination="@id/playTrackDialogFragment2" />
     </fragment>
 
     <fragment
         android:id="@+id/moreAlbumsFragment"
-        android:name="com.app.lastplayer.ui.fragments.MoreAlbumsFragment"
+        android:name="com.app.lastplayer.ui.fragments.more.MoreAlbumsFragment"
         android:label="MoreAlbumsFragment"
         tools:layout="@layout/fragment_more_albums">
         <action
             android:id="@+id/action_moreAlbumsFragment_to_albumDetailedFragment"
             app:destination="@id/albumDetailedFragment" />
-        <argument
-            android:name="albumsList"
-            app:argType="com.app.lastplayer.data.remote.Album[]" />
     </fragment>
 
-    <dialog
-        android:id="@+id/playTrackDialogFragment2"
-        android:name="com.app.lastplayer.ui.fragments.PlayTrackDialogFragment"
-        android:label="PlayTrackDialogFragment"
-        tools:layout="@layout/play_bottom_sheet">
+    <fragment
+        android:id="@+id/authorDetailedFragment"
+        android:name="com.app.lastplayer.ui.fragments.detailed.AuthorDetailedFragment"
+        android:label="AuthorDetailedFragment">
         <argument
-            android:name="tracksData"
-            app:argType="com.app.lastplayer.data.TrackSharedData[]" />
+            android:name="authorId"
+            app:argType="string" />
         <argument
-            android:name="position"
-            app:argType="integer" />
-    </dialog>
+            android:name="authorImage"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/moreAuthorsFragment"
+        android:name="com.app.lastplayer.ui.fragments.more.MoreAuthorsFragment"
+        android:label="MoreAuthorsFragment">
+        <action
+            android:id="@+id/action_moreAuthorsFragment_to_authorDetailedFragment"
+            app:destination="@id/authorDetailedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moreFeedsFragment"
+        android:name="com.app.lastplayer.ui.fragments.more.MoreFeedsFragment"
+        android:label="MoreFeedsFragment">
+        <action
+            android:id="@+id/action_moreFeedsFragment_to_feedDetailedFragment"
+            app:destination="@id/feedDetailedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedDetailedFragment"
+        android:name="com.app.lastplayer.ui.fragments.detailed.FeedDetailedFragment"
+        android:label="FeedDetailedFragment">
+        <argument
+            android:name="feedImage"
+            app:argType="string" />
+        <argument
+            android:name="feedText"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistDetailedFragment"
+        android:name="com.app.lastplayer.ui.fragments.detailed.PlaylistDetailedFragment"
+        android:label="PlaylistDetailedFragment">
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="playlistId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/morePlaylistsFragment"
+        android:name="com.app.lastplayer.ui.fragments.more.MorePlaylistsFragment"
+        android:label="MorePlaylistsFragment">
+        <action
+            android:id="@+id/action_morePlaylistsFragment_to_playlistDetailedFragment"
+            app:destination="@id/playlistDetailedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.app.lastplayer.ui.fragments.AccountFragment"
+        android:label="AccountFragment" >
+        <action
+            android:id="@+id/action_accountFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_accountFragment_self"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.app.lastplayer.ui.fragments.FavoritesFragment"
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.app.lastplayer.ui.fragments.SearchFragment"
+        android:label="SearchFragment" />
+
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment" />
+    <action
+        android:id="@+id/action_global_searchFragment"
+        app:destination="@id/searchFragment" />
+    <action
+        android:id="@+id/action_global_accountFragment"
+        app:destination="@id/accountFragment" />
+    <action
+        android:id="@+id/action_global_favoritesFragment"
+        app:destination="@id/favoritesFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.app.lastplayer.ui.fragments.LoginFragment"
+        android:label="LoginFragment" />
 
 </navigation>

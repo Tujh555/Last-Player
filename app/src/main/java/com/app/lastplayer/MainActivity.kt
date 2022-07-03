@@ -10,9 +10,14 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.app.lastplayer.data.TrackSharedData
+import com.app.lastplayer.databinding.ActivityMainBinding
 import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.ControlFragment
+import com.app.lastplayer.ui.fragments.MainFragment
 
 
 class MainActivity : AppCompatActivity(), ServiceConnector {
@@ -76,12 +81,48 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
         }
     }
 
+    private var _binding: ActivityMainBinding? = null
+    private val binding: ActivityMainBinding
+        get() = requireNotNull(_binding)
+
     override val mediaController: MediaControllerCompat?
         get() = _mediaController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        binding.bottomMenu.setOnItemSelectedListener { menuItem ->
+            val controller = binding
+                .fragmentContainer.
+                getFragment<MainFragment>().
+                findNavController()
+
+            when (menuItem.itemId) {
+                R.id.home -> controller.navigate(
+                    R.id.action_global_mainFragment
+                )
+
+                R.id.favorites -> controller.navigate(
+                    R.id.action_global_favoritesFragment
+                )
+
+                R.id.search -> controller.navigate(
+                    R.id.action_global_searchFragment
+                )
+
+                R.id.account -> controller.navigate(
+                    R.id.action_global_accountFragment
+                )
+            }
+
+            true
+        }
     }
 
     override fun connectToService() {
@@ -90,8 +131,6 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
             serviceConnection,
             BIND_AUTO_CREATE
         )
-
-        Log.d("MyLogs", "MainActivity connectToService()")
     }
 
     override fun onClickTrack(list: List<TrackSharedData>, currentPosition: Int?) {
@@ -121,9 +160,9 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
         if (_mediaController != null) {
             _mediaController?.unregisterCallback(mediaControllerCallback)
             _mediaController = null
-        }
 
-        unbindService(serviceConnection)
+            unbindService(serviceConnection)
+        }
     }
 
     fun interface MediaCallback {

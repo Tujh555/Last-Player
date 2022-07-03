@@ -2,6 +2,7 @@ package com.app.lastplayer.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.app.lastplayer.data.remote.Track
 
 class TrackSharedData(
     val imageUrl: String = "",
@@ -18,6 +19,15 @@ class TrackSharedData(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: ""
+    )
+
+    fun toTrack() = Track(
+        image = imageUrl,
+        name = trackName,
+        authorName = authorName,
+        audioUrl = trackUrl,
+        duration = duration,
+        albumName = albumName
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

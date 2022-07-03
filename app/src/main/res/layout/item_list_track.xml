@@ -29,7 +29,10 @@
         android:id="@+id/trackName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Name of track"
+        tools:text="Name of trackeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:ems="15"
         android:textColor="@color/black"
         android:textSize="13sp"
         android:layout_marginTop="10dp"
@@ -44,7 +47,10 @@
         android:textSize="11sp"
         android:textStyle="italic"
         android:layout_marginStart="5dp"
-        tools:text="Name of author"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:ems="15"
+        tools:text="Name of authoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         app:layout_constraintTop_toBottomOf="@id/trackName"
         app:layout_constraintStart_toEndOf="@id/trackImageContainer"/>
 

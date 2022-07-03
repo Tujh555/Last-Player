@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetPlaylistsUseCase {
     operator fun invoke(
-        playlistName: String = "",
+        playlistId: String = "",
         offset:Int = 0,
         tracks: String = "",
         order: String = "creationdate_desc"

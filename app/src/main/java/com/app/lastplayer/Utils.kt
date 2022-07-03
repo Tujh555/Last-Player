@@ -2,8 +2,21 @@ package com.app.lastplayer
 
 import android.content.Context
 import android.media.DeniedByServerException
+import android.text.TextUtils
+import android.util.Log
+import android.widget.EditText
+import androidx.paging.PagingConfig
 import com.app.lastplayer.data.remote.JamendoResponse
 import com.app.lastplayer.di.AppComponent
+import kotlinx.coroutines.CoroutineExceptionHandler
+
+fun EditText.requireText(): String {
+    if (!TextUtils.isEmpty(this.text)) {
+        return this.text.toString()
+    } else {
+        throw IllegalStateException("Text was null")
+    }
+}
 
 val Context.appComponent: AppComponent
     get() = if (this is MainApplication) {
@@ -39,3 +52,12 @@ fun String.toTrackDuration() = if (this.all { it.isDigit() }) {
 } else {
     "--:--"
 }
+
+val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    Log.e("MyLogs", "$throwable in $coroutineContext")
+}
+
+val pagingConfig = PagingConfig(
+    pageSize = 2,
+    enablePlaceholders = false
+)

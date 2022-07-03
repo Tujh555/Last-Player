@@ -10,10 +10,10 @@ import com.app.lastplayer.databinding.FeedListItemBinding
 import com.app.lastplayer.databinding.PlaylistListItemBinding
 import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
-import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.AlbumViewHolder
-import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.AuthorViewHolder
-import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.FeedViewHolder
-import com.app.lastplayer.ui.adapters.mainFragment.viewHolders.PlaylistViewHolder
+import com.app.lastplayer.ui.adapters.viewHolders.AlbumViewHolder
+import com.app.lastplayer.ui.adapters.viewHolders.AuthorViewHolder
+import com.app.lastplayer.ui.adapters.viewHolders.FeedViewHolder
+import com.app.lastplayer.ui.adapters.viewHolders.PlaylistViewHolder
 
 class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mainDataList = mutableListOf<MainListData>()
@@ -81,13 +81,22 @@ class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 )
             }
             MainDataType.AUTHOR.ordinal -> {
-                (holder as AuthorViewHolder).bind(item as MainListData.AuthorItem)
+                (holder as AuthorViewHolder).bind(
+                    item as MainListData.AuthorItem,
+                    imageClickListeners[holder.itemViewType]
+                )
             }
             MainDataType.FEED.ordinal -> {
-                (holder as FeedViewHolder).bind(item as MainListData.FeedItem)
+                (holder as FeedViewHolder).bind(
+                    item as MainListData.FeedItem,
+                    imageClickListeners[holder.itemViewType]
+                )
             }
             MainDataType.PLAYLIST.ordinal -> {
-                (holder as PlaylistViewHolder).bind(item as MainListData.PlaylistItem)
+                (holder as PlaylistViewHolder).bind(
+                    item as MainListData.PlaylistItem,
+                    imageClickListeners[holder.itemViewType]
+                )
             }
         }
     }

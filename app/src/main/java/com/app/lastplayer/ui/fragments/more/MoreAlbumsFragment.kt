@@ -1,12 +1,16 @@
-package com.app.lastplayer.ui.fragments
+package com.app.lastplayer.ui.fragments.more
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.drawable.ClipDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
+import androidx.annotation.ColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,23 +18,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentMoreAlbumsBinding
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
-import com.app.lastplayer.ui.adapters.moreAlbumsFragment.AlbumsListAdapter
-import com.app.lastplayer.ui.viewModels.MoreAlbumsViewModel
-import kotlinx.coroutines.delay
+import com.app.lastplayer.ui.adapters.more.moreAlbumsFragment.AlbumsListAdapter
+import com.app.lastplayer.ui.viewModels.more.MoreAlbumsViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
     private var binding: FragmentMoreAlbumsBinding? = null
     private val adapter by lazy { AlbumsListAdapter() }
-    private val navArgs by navArgs<MoreAlbumsFragmentArgs>()
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -47,35 +51,6 @@ class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
             }
     }
 
-    private val albumsScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-
-            binding?.run {
-                viewModel.isAlbumsListScrolling =
-                    newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL
-            }
-        }
-
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-
-            recyclerView.layoutManager?.run {
-                val scrollOutItems = (this as LinearLayoutManager).findFirstVisibleItemPosition()
-                val isEnd = childCount + scrollOutItems == itemCount
-
-                if (viewModel.isAlbumsListScrolling && isEnd) {
-                    viewModel.run {
-                        isAlbumsListScrolling = false
-                        getAlbums()
-                    }
-
-                    changeProgressBarState()
-                }
-            }
-        }
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context.appComponent.inject(this)
@@ -83,12 +58,8 @@ class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getAlbums()
 
-        adapter.run {
-            imageClickListener = albumImageClickListener
-            addToList(navArgs.albumsList.toList())
-        }
+        adapter.imageClickListener = albumImageClickListener
     }
 
     override fun onCreateView(
@@ -97,9 +68,8 @@ class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMoreAlbumsBinding.inflate(inflater, container, false)
-        getAlbums()
 
-        binding?.progressBar?.visibility = View.GONE
+        getAlbums()
         return binding?.root
     }
 
@@ -109,7 +79,13 @@ class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
         binding?.run {
             albumsList.adapter = adapter
             albumsList.layoutManager = LinearLayoutManager(requireContext())
-            albumsList.addOnScrollListener(albumsScrollListener)
+            albumsList.addItemDecoration(
+                DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
+                    requireContext().getDrawable(R.drawable.divider)?.let {
+                        setDrawable(it)
+                    }
+                }
+            )
         }
     }
 
@@ -121,28 +97,10 @@ class MoreAlbumsFragment : Fragment(R.layout.fragment_more_albums) {
     private fun getAlbums() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.albumsList.collect {
-                    adapter.addToList(it)
-
-                    changeProgressBarState()
-                }
-            }
-        }
-    }
-
-    private fun changeProgressBarState() {
-        binding?.run {
-            lifecycleScope.launch {
-                delay(800L)
-
-                progressBar.visibility = if (progressBar.visibility == View.GONE) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
+                viewModel.albumsList.collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
                 }
             }
         }
     }
 }
-
-// OnScrollListener,
