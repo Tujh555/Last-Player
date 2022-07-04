@@ -1,20 +1,45 @@
 package com.app.lastplayer.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.app.lastplayer.R
+import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentLoginBinding
 import com.app.lastplayer.requireText
+import com.app.lastplayer.ui.viewModels.LoginFragmentViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.*
+import javax.inject.Inject
 import kotlin.IllegalStateException
 
 class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val auth = FirebaseAuth.getInstance()
-    private var user = auth.currentUser
+    private var user = FirebaseAuth.getInstance().currentUser
+    private val viewModel by viewModels<LoginFragmentViewModel> {
+        factory
+    }
+
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        context.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,31 +62,20 @@ class LoginFragment : Fragment() {
                         passwordEdiText.requireText()
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                requireContext(),
-                                "Signup successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else if (user != null) {
-                            Toast.makeText(
-                                requireContext(),
-                                "You are already registered.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            viewModel.insertUser(
+                                user?.uid ?: UUID.randomUUID().toString()
+                            )
+
+                            goToNextFragment()
+                            showToast("Signup successful")
+                        } else if (task.exception is FirebaseAuthUserCollisionException) {
+                            showToast("You are already registered.")
                         } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Something went wrong... \nPlease, reenter.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showToast("Something went wrong... \nPlease, reenter.")
                         }
                     }
                 } catch (e: IllegalStateException) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong... \nPlease, reenter.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("Something went wrong... \nPlease, reenter.")
                 }
             }
 
@@ -72,26 +86,37 @@ class LoginFragment : Fragment() {
                         passwordEdiText.requireText()
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                requireContext(),
-                                "SignIn successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
+
+                            viewModel.insertUser(
+                                user?.uid ?: UUID.randomUUID().toString()
+                            )
+                            goToNextFragment()
+                            showToast("SignIn successful")
                         } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Something went wrong... \nPlease, reenter.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showToast("Wrong password")
                         }
                     }
                 } catch (e: IllegalStateException) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong... \nPlease, reenter.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast("Something went wrong... \nPlease, reenter.")
                 }
+            }
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(
+            requireContext(),
+            message,
+            Toast.LENGTH_LONG
+        )
+        Log.d("MyLogs", message)
+    }
+
+    private fun goToNextFragment() {
+        lifecycleScope.launch {
+            delay(300L)
+            R.id.action_global_mainFragment.also {
+                findNavController().navigate(it)
             }
         }
     }

@@ -32,7 +32,7 @@
         tools:text="Name of trackeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         android:maxLines="1"
         android:ellipsize="end"
-        android:ems="15"
+        android:ems="12"
         android:textColor="@color/black"
         android:textSize="13sp"
         android:layout_marginTop="10dp"
@@ -49,10 +49,20 @@
         android:layout_marginStart="5dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:ems="15"
+        android:ems="12"
         tools:text="Name of authoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         app:layout_constraintTop_toBottomOf="@id/trackName"
         app:layout_constraintStart_toEndOf="@id/trackImageContainer"/>
+
+    <ImageView
+        android:id="@+id/addToFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_add_circle_24"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/trackDuration"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/trackDuration"

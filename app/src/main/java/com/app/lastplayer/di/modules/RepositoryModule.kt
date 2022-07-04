@@ -1,7 +1,9 @@
 package com.app.lastplayer.di.modules
 
+import com.app.lastplayer.repositories.DatabaseRepository
 import com.app.lastplayer.repositories.JamendoApiRepository
 import com.app.lastplayer.repositories.MusicRepository
+import com.app.lastplayer.repositories.impl.DatabaseRepositoryImpl
 import com.app.lastplayer.repositories.impl.JamendoApiRepositoryImpl
 import com.app.lastplayer.repositories.impl.MusicRepositoryImpl
 import dagger.Binds
@@ -18,4 +20,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindMusicRepositoryImpl(musicRepositoryImpl: MusicRepositoryImpl): MusicRepository
+
+    @Binds
+    @Singleton
+    fun bindDatabaseRepository(databaseRepositoryImpl: DatabaseRepositoryImpl): DatabaseRepository
 }

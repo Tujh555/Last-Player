@@ -46,6 +46,15 @@ class AccountFragment : Fragment() {
                 unregisteredUserLayout.visibility = View.GONE
                 registeredUserLayout.visibility = View.VISIBLE
             }
+
+            userEmail.text = user?.email ?: ""
+
+            singOutButton.setOnClickListener {
+                auth.signOut()
+                AccountFragmentDirections.actionAccountFragmentSelf().also {
+                    findNavController().navigate(it)
+                }
+            }
         }
 
         return binding?.root

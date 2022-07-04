@@ -19,7 +19,7 @@
     <string name="search_yor_tracks_text">Search yor tracks</string>
     <string name="email_text">Email</string>
     <string name="password_text">Password</string>
-    <string name="register_text">Sign in</string>
+    <string name="register_text">Sign up</string>
     <string name="login_text">Log in</string>
     <string name="favorites_unregistered_text">Your added tracks will be displayed here if you register or log in.</string>
     <string name="sign_in_or_sign_up_text">Sign in or Sign up</string>
@@ -31,4 +31,5 @@
     <string name="cancel_text">Cancel</string>
     <string name="email_password_text">Email / Password</string>
     <string name="change_your_data_text">Change your data</string>
+    <string name="your_information_will_be_displayed_here_text">Your information will be displayed here</string>
 </resources>

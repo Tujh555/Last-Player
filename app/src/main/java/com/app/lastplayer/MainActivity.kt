@@ -112,10 +112,6 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
                     R.id.action_global_favoritesFragment
                 )
 
-                R.id.search -> controller.navigate(
-                    R.id.action_global_searchFragment
-                )
-
                 R.id.account -> controller.navigate(
                     R.id.action_global_accountFragment
                 )

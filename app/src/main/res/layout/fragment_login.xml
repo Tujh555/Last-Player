@@ -25,7 +25,6 @@
                 android:layout_width="350dp"
                 android:layout_height="60dp"
                 android:hint="@string/email_text"
-                android:inputType="textWebPassword"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -31,27 +31,25 @@ class MainFragment : Fragment() {
     private val mainListAdapter by lazy { MainListAdapter() }
 
     private val seeMoreClickListener = MainListAdapter.SeeMoreClickListener { code, _ ->
-        val action = when (code) {
+         when (code) {
             MainDataType.ALBUM.ordinal -> {
-                MainFragmentDirections.actionMainFragmentToMoreAlbumsFragment()
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMoreAlbumsFragment()
+                )
             }
 
             MainDataType.AUTHOR.ordinal -> {
-                MainFragmentDirections.actionMainFragmentToMoreAuthorsFragment()
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMoreAuthorsFragment()
+                )
             }
 
             MainDataType.PLAYLIST.ordinal -> {
-                MainFragmentDirections.actionMainFragmentToMorePlaylistsFragment()
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMorePlaylistsFragment()
+                )
             }
-
-            MainDataType.FEED.ordinal -> {
-                MainFragmentDirections.actionMainFragmentToMoreFeedsFragment()
-            }
-
-            else -> throw IllegalArgumentException("Unknown data code")
         }
-
-        findNavController().navigate(action)
     }
 
     private val albumImageClickListener = ImageClickListener { albumId, imageUrl ->
@@ -89,13 +87,11 @@ class MainFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("MyLogs", " onAttach")
         context.appComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("MyLogs", "onCreate")
         if (savedInstanceState?.getBoolean(IS_FLIPPED_KEY) != true) {
             viewModel.initListItems()
         }
@@ -106,7 +102,6 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("MyLogs", "onCreateView")
         binding = FragmentMainBinding.inflate(inflater, container, false)
 
         return binding?.root
@@ -114,7 +109,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("MyLogs", "onViewCreated")
 
         mainListAdapter.setImageClickListenerOn(
             MainDataType.ALBUM.ordinal,
@@ -146,20 +140,9 @@ class MainFragment : Fragment() {
         getListItems()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d("MyLogs", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d("MyLogs", "onResume")
-    }
-
     override fun onStop() {
         super.onStop()
-        Log.d("MyLogs", "onStop")
+
         isFlipped = true
     }
 
@@ -173,13 +156,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        Log.d("MyLogs", "onDestroyView")
         binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("MyLogs", "onDestroy")
     }
 
     private fun getListItems() {

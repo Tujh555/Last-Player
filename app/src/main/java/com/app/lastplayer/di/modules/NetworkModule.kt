@@ -26,5 +26,5 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthentication() = FirebaseAuth.getInstance()
+    fun provideAuthentication(): FirebaseAuth = FirebaseAuth.getInstance()
 }

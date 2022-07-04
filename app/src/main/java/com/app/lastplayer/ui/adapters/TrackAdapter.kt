@@ -1,21 +1,27 @@
 package com.app.lastplayer.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.data.remote.Track
 import com.app.lastplayer.databinding.ItemListTrackBinding
 import com.app.lastplayer.toTrackDuration
+import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.bumptech.glide.RequestManager
+import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 class TrackAdapter @Inject constructor(
+    private val auth: FirebaseAuth,
     private val glideRequestManager: RequestManager
 ) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     private val trackList = mutableListOf<Track>()
     var trackClickListener: TrackClickListener? = null
+    var addTofavoritesClickListener: AddTofavoritesClickListener? = null
 
     fun setList(list: List<Track>) {
         trackList.clear()
@@ -53,6 +59,19 @@ class TrackAdapter @Inject constructor(
                         trackList.map { it.sharedData },
                         bindingAdapterPosition
                     )
+                }
+
+                addToFavorites.visibility = if (auth.currentUser == null) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+
+                addToFavorites.setOnClickListener {
+                    auth.currentUser?.let {
+                        Log.d("MyLogs", "VHolded userId = ${it.uid}")
+                        addTofavoritesClickListener?.click(track.toTrackEntity(it.uid))
+                    }
                 }
 
                 trackName.text = track.name

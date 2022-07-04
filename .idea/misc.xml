@@ -13,8 +13,10 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/button_save_background.xml" value="0.1775" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/divider.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.1585" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1295" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1585" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.1" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_baseline_playlist_play_24.xml" value="0.1295" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/image_track_foreground.xml" value="0.1" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/next_button_foreground.xml" value="0.1005" />
@@ -22,7 +24,7 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/play_bottom_sheet_background.xml" value="0.1425" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/progress_bar_background.xml" value="0.1345" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/drawable/progress_bitmap.xml" value="0.1335" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/activity_main.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/album_list_item.xml" value="0.36942675159235666" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/album_list_item_card.xml" value="0.2803234501347709" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/author_list_item.xml" value="0.3401015228426396" />
@@ -44,7 +46,7 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/fragment_more_authors.xml" value="0.11875" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/fragment_more_playlists.xml" value="0.10104166666666667" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/fragment_search.xml" value="0.25675675675675674" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/item_list_track.xml" value="0.7073170731707317" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/item_list_track.xml" value="0.6666666666666666" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/item_main_list.xml" value="0.33458646616541354" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/loading_toast.xml" value="0.13645833333333332" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/LastPlayer/app/src/main/res/layout/play_bottom_sheet.xml" value="0.3333333333333333" />

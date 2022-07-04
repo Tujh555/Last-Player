@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.PlaylistListItemBinding
+import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class PlaylistViewHolder(
@@ -12,7 +13,7 @@ class PlaylistViewHolder(
 
     fun bind(
         _playlist: MainListData.PlaylistItem,
-        imageClickListener: ImageClickListener?
+        imageClickListener: ImageClickListener?,
     ) {
         val playlist = _playlist.item
 
@@ -21,7 +22,7 @@ class PlaylistViewHolder(
             playlistOwner.text = playlist.userName
             playlistCreationDate.text = playlist.creationDate.replace("-", ".")
 
-            playlistImage.setImageResource(R.drawable.ic_launcher_background)  // TODO(Make placeholder)
+            playlistImage.setImageResource(R.drawable.ic_baseline_playlist_play_24)
 
             playlistImage.setOnClickListener {
                 imageClickListener?.onClick(

@@ -2,9 +2,11 @@ package com.app.lastplayer.ui.fragments.detailed
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,9 +21,11 @@ import com.app.lastplayer.ServiceConnector
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentDetailedAlbumBinding
 import com.app.lastplayer.ui.adapters.TrackAdapter
+import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.app.lastplayer.ui.viewModels.detailed.AlbumDetailedViewModel
 import com.bumptech.glide.RequestManager
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,6 +42,18 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         connector.onClickTrack(data, position)
     }
 
+    private val addToFavoritesClickListener = AddTofavoritesClickListener { track ->
+        Toast.makeText(
+            requireContext(),
+            "Added",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        auth.currentUser?.uid?.let { id ->
+            viewModel.insertTrack(track, id)
+        }
+    }
+
     @Inject
     lateinit var trackAdapter: TrackAdapter
 
@@ -46,6 +62,9 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
 
     @Inject
     lateinit var glideRequestManager: RequestManager
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
 
     override fun onAttach(context: Context) {
@@ -69,6 +88,8 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         binding = FragmentDetailedAlbumBinding.inflate(inflater, container, false)
         getTracks()
 
+        Log.d("MyLogs", "AlbumDetailedFragment ${auth.currentUser}")
+
         return binding?.root
     }
 
@@ -76,6 +97,7 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         super.onViewCreated(view, savedInstanceState)
 
         trackAdapter.trackClickListener = trackClickListener
+        trackAdapter.addTofavoritesClickListener = addToFavoritesClickListener
 
         binding?.run {
             glideRequestManager.load(navArgs.albumImage)

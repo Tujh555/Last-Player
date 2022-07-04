@@ -40,16 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/topGuideline" />
 
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/button_play_foreground"
-        android:background="@drawable/button_play_background"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toTopOf="@id/topGuideline"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/authorTracksList"
         android:layout_width="match_parent"

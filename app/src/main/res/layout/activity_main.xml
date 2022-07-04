@@ -26,7 +26,7 @@
         android:id="@+id/bottomMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary_variant"
+        android:background="#1f4f16"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

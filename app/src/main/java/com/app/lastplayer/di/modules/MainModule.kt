@@ -9,6 +9,7 @@ import dagger.Module
         RepositoryModule::class,
         ViewModelModule::class,
         MediaModule::class,
+        DatabaseModule::class
     ]
 )
 interface MainModule

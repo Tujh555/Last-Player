@@ -25,7 +25,7 @@ class AuthorViewHolder(
 
         binding.run {
             glideRequestManager.load(author.image)
-                .placeholder(R.drawable.ic_launcher_background)  // TODO(Make placeholder)
+                .placeholder(R.drawable.ic_baseline_person_24)
                 .centerCrop()
                 .into(authorImage)
 

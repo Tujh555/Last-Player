@@ -1,6 +1,7 @@
 package com.app.lastplayer.ui.adapters.mainFragment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,11 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainViewHolder>() {
         fun bind(mainListItem: MainListItem) {
             mainHolderBinding.run {
                 title.text = mainListItem.title
+
+                if (mainListItem.title.lowercase() == "feeds") {
+                    seeMore.visibility = View.GONE
+                }
+
                 seeMore.setOnClickListener {
                     seeMoreClickListener?.click(mainListItem.dataTypeCode, mainListItem.mainItems)
                 }

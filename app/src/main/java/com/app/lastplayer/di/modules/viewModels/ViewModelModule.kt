@@ -2,6 +2,8 @@ package com.app.lastplayer.di.modules.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.app.lastplayer.ui.viewModels.FavoriteViewModel
+import com.app.lastplayer.ui.viewModels.LoginFragmentViewModel
 import com.app.lastplayer.ui.viewModels.detailed.AlbumDetailedViewModel
 import com.app.lastplayer.ui.viewModels.detailed.AuthorDetailedViewModel
 import com.app.lastplayer.ui.viewModels.MainViewModel
@@ -52,4 +54,14 @@ interface ViewModelModule {
     @Binds
     @ViewModelKey(MorePlaylistsViewModel::class)
     fun bindMorePlaylistsViewModel(viewModel: MorePlaylistsViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(FavoriteViewModel::class)
+    fun bindFavoriteViewModel(viewModel: FavoriteViewModel): ViewModel
+
+    @IntoMap
+    @Binds
+    @ViewModelKey(LoginFragmentViewModel::class)
+    fun bindViewModelLogin(viewModel: LoginFragmentViewModel): ViewModel
 }
