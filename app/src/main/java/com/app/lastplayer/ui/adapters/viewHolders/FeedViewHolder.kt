@@ -30,7 +30,7 @@ class FeedViewHolder(
             }
 
             glideRequestManager.load(feed.images?.size315_111)
-                .placeholder(R.drawable.ic_launcher_background)  // TODO(Make placeholder)
+                .placeholder(R.drawable.ic_baseline_feed_24)
                 .centerCrop()
                 .into(feedImage)
 

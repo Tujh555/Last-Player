@@ -41,7 +41,7 @@ class FeedDetailedFragment : Fragment() {
         binding?.run {
             glideRequestManager.load(args.feedImage)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_baseline_feed_24)
                 .into(feedImage)
 
             feedText.text = args.feedText
