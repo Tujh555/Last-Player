@@ -14,17 +14,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.lastplayer.Constants
 import com.app.lastplayer.Constants.IS_FLIPPED_KEY
 import com.app.lastplayer.R
 import com.app.lastplayer.ServiceConnector
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentDetailedPlaylistBinding
 import com.app.lastplayer.ui.adapters.TrackAdapter
-import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
+import com.app.lastplayer.ui.adapters.clickListeners.AddToFavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.app.lastplayer.ui.viewModels.detailed.PlaylistDetailedViewModel
-import com.bumptech.glide.RequestManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,16 +41,14 @@ class PlaylistDetailedFragment : Fragment() {
         connector.onClickTrack(data, position)
     }
 
-    private val addToFavoritesClickListener = AddTofavoritesClickListener { track ->
+    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
         Toast.makeText(
             requireContext(),
             "Added",
             Toast.LENGTH_SHORT
         ).show()
 
-        auth.currentUser?.uid?.let { id ->
-            viewModel.insertTrack(track, id)
-        }
+        viewModel.insertTrack(track)
     }
 
     @Inject
@@ -92,7 +88,7 @@ class PlaylistDetailedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         trackAdapter.trackClickListener = trackClickListener
-        trackAdapter.addTofavoritesClickListener = addToFavoritesClickListener
+        trackAdapter.addToFavoritesClickListener = addToFavoritesClickListener
 
         binding?.run {
             playlistImage.setImageResource(R.drawable.ic_baseline_playlist_play_24)

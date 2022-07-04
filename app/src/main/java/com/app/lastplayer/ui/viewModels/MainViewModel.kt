@@ -50,7 +50,7 @@ class MainViewModel @Inject constructor(
         requireSuccessful(response) {
             items.add(
                 MainListItem(
-                    title = "Authors",  //TODO resources
+                    title = "Authors",
                     body.map { author -> MainListData.AuthorItem(author) },
                     MainDataType.AUTHOR.ordinal
                 )

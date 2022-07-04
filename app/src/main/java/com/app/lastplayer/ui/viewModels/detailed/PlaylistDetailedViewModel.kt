@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.app.lastplayer.data.remote.Track
 import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.exceptionHandler
+import com.app.lastplayer.repositories.DatabaseRepository
 import com.app.lastplayer.requireBody
 import com.app.lastplayer.usecases.GetPlaylistsUseCase
 import com.app.lastplayer.usecases.database.InsertTrackUseCase
@@ -22,9 +23,9 @@ class PlaylistDetailedViewModel @Inject constructor(
         private set
     val trackList = _tracksList.asStateFlow()
 
-    fun insertTrack(track: TrackEntity, userId: String) {
+    fun insertTrack(track: TrackEntity) {
         viewModelScope.launch(exceptionHandler) {
-            insertTrackUseCase(track = track, userId = userId)
+            insertTrackUseCase(track.userKey, track)
         }
     }
 

@@ -21,7 +21,7 @@ import com.app.lastplayer.ServiceConnector
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentDetailedAlbumBinding
 import com.app.lastplayer.ui.adapters.TrackAdapter
-import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
+import com.app.lastplayer.ui.adapters.clickListeners.AddToFavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.app.lastplayer.ui.viewModels.detailed.AlbumDetailedViewModel
 import com.bumptech.glide.RequestManager
@@ -42,16 +42,14 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         connector.onClickTrack(data, position)
     }
 
-    private val addToFavoritesClickListener = AddTofavoritesClickListener { track ->
+    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
         Toast.makeText(
             requireContext(),
             "Added",
             Toast.LENGTH_SHORT
         ).show()
 
-        auth.currentUser?.uid?.let { id ->
-            viewModel.insertTrack(track, id)
-        }
+        viewModel.insertTrack(track)
     }
 
     @Inject
@@ -97,12 +95,12 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         super.onViewCreated(view, savedInstanceState)
 
         trackAdapter.trackClickListener = trackClickListener
-        trackAdapter.addTofavoritesClickListener = addToFavoritesClickListener
+        trackAdapter.addToFavoritesClickListener = addToFavoritesClickListener
 
         binding?.run {
             glideRequestManager.load(navArgs.albumImage)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)  //TODO make placeholder
+                .placeholder(R.drawable.ic_baseline_album_24)
                 .into(albumImage)
 
             albumTracksList.layoutManager = LinearLayoutManager(requireContext())

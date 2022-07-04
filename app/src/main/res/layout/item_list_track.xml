@@ -64,6 +64,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ImageView
+        android:id="@+id/removeFromFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:padding="10dp"
+        app:layout_constraintEnd_toStartOf="@id/trackDuration"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/trackDuration"
         android:layout_width="wrap_content"

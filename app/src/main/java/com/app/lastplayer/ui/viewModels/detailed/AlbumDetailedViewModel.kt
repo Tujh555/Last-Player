@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.app.lastplayer.data.remote.Track
 import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.exceptionHandler
+import com.app.lastplayer.repositories.DatabaseRepository
 import com.app.lastplayer.requireBody
 import com.app.lastplayer.usecases.GetTracksUseCase
 import com.app.lastplayer.usecases.database.InsertTrackUseCase
@@ -20,9 +21,9 @@ class AlbumDetailedViewModel @Inject constructor(
     private val _tracksList = MutableStateFlow(listOf<Track>())
     val trackList = _tracksList.asStateFlow()
 
-    fun insertTrack(track: TrackEntity, userId: String) {
-        viewModelScope.launch(exceptionHandler) {
-            insertTrackUseCase(track = track, userId = userId)
+    fun insertTrack(track: TrackEntity) {
+        viewModelScope.launch {
+            insertTrackUseCase(track.userKey, track)
         }
     }
 

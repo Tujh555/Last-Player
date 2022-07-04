@@ -2,10 +2,13 @@ package com.app.lastplayer.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,10 +17,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.lastplayer.Constants
+import com.app.lastplayer.ServiceConnector
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentFavoritesBinding
 import com.app.lastplayer.ui.adapters.TrackAdapter
+import com.app.lastplayer.ui.adapters.clickListeners.RemoveFromFavorites
+import com.app.lastplayer.ui.adapters.clickListeners.TrackClickListener
 import com.app.lastplayer.ui.viewModels.FavoriteViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -38,6 +43,36 @@ class FavoritesFragment : Fragment() {
 
     private val viewModel by viewModels<FavoriteViewModel> {
         factory
+    }
+
+    private val removeFromFavoritesClickListener = RemoveFromFavorites {
+        Toast.makeText(
+            requireContext(),
+            "Removed",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        viewModel.deleteTrack(it)
+        trackAdapter.removeTrack(it.toTrack())
+    }
+
+    private val trackClickListener = TrackClickListener { data, position ->
+        val connector = requireActivity() as ServiceConnector
+
+        connector.onClickTrack(data, position)
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            trackAdapter.filterList(p0?.toString() ?: "")
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+
+        }
+
     }
 
     private var user: FirebaseUser? = null
@@ -77,8 +112,13 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        trackAdapter.removeFromFavoritesClickListener = removeFromFavoritesClickListener
+        trackAdapter.trackClickListener = trackClickListener
+
         binding?.run {
             loginButton.setOnClickListener(loginButtonClickListener)
+
+            searchEditText.addTextChangedListener(textWatcher)
 
             tracksList.adapter = trackAdapter
             tracksList.layoutManager = LinearLayoutManager(requireContext())

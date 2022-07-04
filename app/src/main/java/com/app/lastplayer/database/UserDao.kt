@@ -11,9 +11,6 @@ interface UserDao {
     @Query("SELECT * FROM TrackEntity WHERE userKey = (:id)")
     suspend fun getUserWithTracks(id: String): List<TrackEntity>
 
-    @Query("SELECT * FROM TrackEntity")
-    suspend fun getAllTracks(): List<TrackEntity>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: UserEntity)
 

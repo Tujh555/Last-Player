@@ -11,6 +11,10 @@ fun interface TrackClickListener {
     fun click(data: List<TrackSharedData>, position: Int)
 }
 
-fun interface AddTofavoritesClickListener {
+fun interface AddToFavoritesClickListener {
+    fun click(trackEntity: TrackEntity)
+}
+
+fun interface RemoveFromFavorites {
     fun click(trackEntity: TrackEntity)
 }

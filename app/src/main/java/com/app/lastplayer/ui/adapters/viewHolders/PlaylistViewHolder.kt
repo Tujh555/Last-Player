@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.R
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.databinding.PlaylistListItemBinding
-import com.app.lastplayer.ui.adapters.clickListeners.AddTofavoritesClickListener
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 
 class PlaylistViewHolder(

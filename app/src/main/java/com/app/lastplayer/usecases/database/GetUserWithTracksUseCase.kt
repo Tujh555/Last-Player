@@ -5,5 +5,5 @@ import com.app.lastplayer.database.entities.UserWithTracks
 import kotlinx.coroutines.flow.Flow
 
 interface GetUserWithTracksUseCase {
-    suspend operator fun invoke(userId: String): Flow<List<TrackEntity>>
+    operator fun invoke(userId: String): Flow<List<TrackEntity>>
 }
