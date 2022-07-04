@@ -4,6 +4,7 @@ import android.support.v4.media.session.MediaControllerCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.app.lastplayer.data.TrackSharedData
+import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.ControlFragment
 
 interface ServiceConnector {

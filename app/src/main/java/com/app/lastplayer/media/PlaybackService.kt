@@ -56,6 +56,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
     private var exoPlayer: ExoPlayer? = null
     private var extractorsFactory: ExtractorsFactory? = null
     private var dataSourceFactory: DataSource.Factory? = null
+    private var trackDuration = 0L
 
     @Inject
     lateinit var stateBuilder: PlaybackStateCompat.Builder
@@ -244,7 +245,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
         }
 
         private fun updateMetadataFromTrack(track: TrackSharedData) {
-            Log.d("MyLogs", "updateMetadataFromTrack ${track.trackName}")
+            trackDuration = track.duration.toLong()
 
             metadataBuilder.run {
                 putString(

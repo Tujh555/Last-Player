@@ -96,12 +96,6 @@ class TrackAdapter @Inject constructor(
                     )
                 }
 
-                addToFavorites.visibility = if (auth.currentUser == null) {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
-
                 if (removeFromFavoritesClickListener == null) {
                     addToFavorites.visibility = View.VISIBLE
                     removeFromFavorites.visibility = View.GONE
