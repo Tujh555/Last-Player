@@ -25,7 +25,6 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.session.MediaButtonReceiver
 import com.app.lastplayer.MainActivity
@@ -321,7 +320,12 @@ class PlaybackService : MediaBrowserServiceCompat() {
             val activityIntent = Intent(appContext, MainActivity::class.java)
 
             setSessionActivity(
-                PendingIntent.getActivity(appContext, 0, activityIntent, 0)
+                PendingIntent.getActivity(
+                    appContext,
+                    0,
+                    activityIntent,
+                    PendingIntent.FLAG_IMMUTABLE
+                )
             )
 
             val mediaButtonIntent = Intent(
@@ -336,7 +340,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
                     this@PlaybackService,
                     0,
                     mediaButtonIntent,
-                    0
+                    PendingIntent.FLAG_IMMUTABLE
                 )
             )
 
@@ -408,7 +412,7 @@ class PlaybackService : MediaBrowserServiceCompat() {
     ) {
         Log.d("MyLogs", "in Service onLoadChildren")
 
-        val data = (1 until musicRepository.trackCount - 1).map { i ->
+        val data = (0 until musicRepository.trackCount).map { i ->
             val track = musicRepository.getTrackByIndex(i)
 
             val description = MediaDescriptionCompat.Builder()

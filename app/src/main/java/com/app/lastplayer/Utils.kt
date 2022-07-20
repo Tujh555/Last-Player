@@ -25,7 +25,10 @@ val Context.appComponent: AppComponent
         this.applicationContext.appComponent
     }
 
-inline fun <T> requireSuccessful(response: JamendoResponse<T>, block: JamendoResponse<T>.() -> Unit) {
+inline fun <T> requireSuccessful(
+    response: JamendoResponse<T>,
+    block: JamendoResponse<T>.() -> Unit
+) {
     if (response.isSuccessful) {
         response.block()
     } else {
