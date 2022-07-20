@@ -35,6 +35,11 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kapt {
+        arguments {
+            arg("dagger.fullBindingGraphValidation", "ERROR")
+        }
+    }
 }
 
 dependencies {

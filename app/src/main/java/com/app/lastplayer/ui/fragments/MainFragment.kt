@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.lastplayer.Constants.IS_FLIPPED_KEY
 import com.app.lastplayer.appComponent
 import com.app.lastplayer.databinding.FragmentMainBinding
+import com.app.lastplayer.di.clickListenersComponent.ClickListenersComponent
+import com.app.lastplayer.di.clickListenersComponent.DaggerClickListenersComponent
 import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 import com.app.lastplayer.ui.adapters.mainFragment.MainListAdapter
@@ -29,6 +31,7 @@ class MainFragment : Fragment() {
     private var isFlipped = false
     private val viewModel by viewModels<MainViewModel> { viewModelFactory }
     private val mainListAdapter by lazy { MainListAdapter() }
+    private var clickListenersComponent: ClickListenersComponent? = null
 
     private val seeMoreClickListener = MainListAdapter.SeeMoreClickListener { code, _ ->
          when (code) {
@@ -95,6 +98,13 @@ class MainFragment : Fragment() {
         if (savedInstanceState?.getBoolean(IS_FLIPPED_KEY) != true) {
             viewModel.initListItems()
         }
+
+        clickListenersComponent = DaggerClickListenersComponent.builder()
+            .albumClickListener(albumImageClickListener)
+            .authorClickListener(authorImageClickListener)
+            .playlistClickListener(playlistImageClickListener)
+            .feedClickListener(feedImageClickListener)
+            .build()
     }
 
     override fun onCreateView(
@@ -110,27 +120,28 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainListAdapter.setImageClickListenerOn(
-            MainDataType.ALBUM.ordinal,
-            albumImageClickListener
-        )
-
-        mainListAdapter.setImageClickListenerOn(
-            MainDataType.AUTHOR.ordinal,
-            authorImageClickListener
-        )
-
-        mainListAdapter.setImageClickListenerOn(
-            MainDataType.PLAYLIST.ordinal,
-            playlistImageClickListener
-        )
-
-        mainListAdapter.setImageClickListenerOn(
-            MainDataType.FEED.ordinal,
-            feedImageClickListener
-        )
+//        mainListAdapter.setImageClickListenerOn(
+//            MainDataType.ALBUM.ordinal,
+//            albumImageClickListener
+//        )
+//
+//        mainListAdapter.setImageClickListenerOn(
+//            MainDataType.AUTHOR.ordinal,
+//            authorImageClickListener
+//        )
+//
+//        mainListAdapter.setImageClickListenerOn(
+//            MainDataType.PLAYLIST.ordinal,
+//            playlistImageClickListener
+//        )
+//
+//        mainListAdapter.setImageClickListenerOn(
+//            MainDataType.FEED.ordinal,
+//            feedImageClickListener
+//        )
 
         mainListAdapter.seeMoreClickListener = seeMoreClickListener
+        mainListAdapter.clickListenerComponent = clickListenersComponent
 
         binding?.run {
             mainList.adapter = mainListAdapter

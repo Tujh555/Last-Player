@@ -4,12 +4,17 @@ import androidx.room.*
 import com.app.lastplayer.database.crossRef.UserTrackCrossRef
 import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.database.entities.UserEntity
+import com.app.lastplayer.database.entities.UserWithTracks
 
 @Dao
 interface UserDao {
 
     @Query("SELECT * FROM TrackEntity WHERE userKey = (:id)")
-    suspend fun getUserWithTracks(id: String): List<TrackEntity>
+    suspend fun getUserTracks(id: String): List<TrackEntity>
+
+    @Transaction
+    @Query("SELECT * FROM UserEntity WHERE uid = (:id)")
+    fun getUserWithTrack(id: String): UserWithTracks
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: UserEntity)

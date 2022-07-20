@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.EditText
 import androidx.paging.PagingConfig
 import com.app.lastplayer.data.remote.JamendoResponse
-import com.app.lastplayer.di.AppComponent
+import com.app.lastplayer.di.appComponent.AppComponent
 import kotlinx.coroutines.CoroutineExceptionHandler
 
 fun EditText.requireText(): String {

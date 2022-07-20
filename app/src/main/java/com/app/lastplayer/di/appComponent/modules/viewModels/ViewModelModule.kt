@@ -1,4 +1,4 @@
-package com.app.lastplayer.di.modules.viewModels
+package com.app.lastplayer.di.appComponent.modules.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

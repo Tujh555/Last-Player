@@ -5,16 +5,15 @@ import com.app.lastplayer.database.UserDao
 import com.app.lastplayer.database.crossRef.UserTrackCrossRef
 import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.database.entities.UserEntity
-import com.app.lastplayer.database.entities.UserWithTracks
 import com.app.lastplayer.repositories.DatabaseRepository
 import javax.inject.Inject
 
 class DatabaseRepositoryImpl @Inject constructor (
     private val userDao: UserDao
 ) : DatabaseRepository {
-    override suspend fun getUserWithTracks(id: String): List<TrackEntity> {
+    override suspend fun getUserTracks(id: String): List<TrackEntity> {
         Log.d("MyLogs", "userId = $id")
-        return userDao.getUserWithTracks(id)
+        return userDao.getUserTracks(id)
     }
 
     override suspend fun insertUser(user: UserEntity) {

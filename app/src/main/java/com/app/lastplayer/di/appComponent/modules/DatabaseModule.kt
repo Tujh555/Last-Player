@@ -1,9 +1,7 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.app.lastplayer.database.Database
 import com.app.lastplayer.database.UserDao
 import dagger.Module
@@ -20,7 +18,8 @@ class DatabaseModule {
             appContext,
             Database::class.java,
             "track-db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideUserDao(database: Database): UserDao = database.userDao()

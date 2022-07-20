@@ -1,8 +1,8 @@
 package com.app.lastplayer
 
 import android.app.Application
-import com.app.lastplayer.di.AppComponent
-import com.app.lastplayer.di.DaggerAppComponent
+import com.app.lastplayer.di.appComponent.AppComponent
+import com.app.lastplayer.di.appComponent.DaggerAppComponent
 
 class MainApplication : Application() {
     private var _appComponent: AppComponent? = null

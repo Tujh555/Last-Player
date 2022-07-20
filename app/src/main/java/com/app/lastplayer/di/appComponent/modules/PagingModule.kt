@@ -1,4 +1,4 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
 import androidx.paging.PagingSource
 import com.app.lastplayer.data.remote.Album

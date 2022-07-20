@@ -6,7 +6,7 @@ import com.app.lastplayer.database.entities.UserEntity
 import com.app.lastplayer.database.entities.UserWithTracks
 
 interface DatabaseRepository {
-    suspend fun getUserWithTracks(id: String): List<TrackEntity>
+    suspend fun getUserTracks(id: String): List<TrackEntity>
 
     suspend fun insertUser(user: UserEntity)
 

@@ -4,6 +4,6 @@ import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.database.entities.UserWithTracks
 import kotlinx.coroutines.flow.Flow
 
-interface GetUserWithTracksUseCase {
+interface GetUserTracksUseCase {
     operator fun invoke(userId: String): Flow<List<TrackEntity>>
 }

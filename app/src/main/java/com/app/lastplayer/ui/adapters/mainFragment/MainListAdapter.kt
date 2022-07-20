@@ -7,25 +7,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.data.MainListItem
-import com.app.lastplayer.data.remote.Album
 import com.app.lastplayer.databinding.ItemMainListBinding
-import com.app.lastplayer.ui.MainDataType
-import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
-import kotlin.reflect.KClass
+import com.app.lastplayer.di.clickListenersComponent.ClickListenersComponent
+import dagger.Lazy
+import javax.inject.Inject
 
 class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainViewHolder>() {
     private val mainListItems: MutableList<MainListItem> = mutableListOf()
-    private val imageClickListeners = mutableMapOf<Int, ImageClickListener>()
     var seeMoreClickListener: SeeMoreClickListener? = null
+    var clickListenerComponent: ClickListenersComponent? = null
 
     fun setList(list: List<MainListItem>) {
         mainListItems.clear()
         mainListItems.addAll(list)
         notifyDataSetChanged()
-    }
-
-    fun setImageClickListenerOn(dataTypeCode: Int, listener: ImageClickListener) {
-        imageClickListeners[dataTypeCode] = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -43,7 +38,12 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainViewHolder>() {
     inner class MainViewHolder(
         private val mainHolderBinding: ItemMainListBinding
     ) : RecyclerView.ViewHolder(mainHolderBinding.root) {
-        private val dataAdapter by lazy { MainListDataAdapter() }
+        @Inject
+        lateinit var dataAdapter: Lazy<MainListDataAdapter>
+
+        init {
+            clickListenerComponent?.inject(this)
+        }
 
         fun bind(mainListItem: MainListItem) {
             mainHolderBinding.run {
@@ -57,10 +57,12 @@ class MainListAdapter : RecyclerView.Adapter<MainListAdapter.MainViewHolder>() {
                     seeMoreClickListener?.click(mainListItem.dataTypeCode, mainListItem.mainItems)
                 }
 
-                dataAdapter.setList(mainListItem.mainItems)
-                dataAdapter.setClickListeners(imageClickListeners)
+                if (this@MainViewHolder::dataAdapter.isInitialized) {
+                    dataAdapter.get().setList(mainListItem.mainItems)
 
-                itemsList.adapter = dataAdapter
+                    itemsList.adapter = dataAdapter.get()
+                }
+
                 itemsList.layoutManager = LinearLayoutManager(
                     mainHolderBinding.root.context,
                     LinearLayoutManager.HORIZONTAL,

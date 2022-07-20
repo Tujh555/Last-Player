@@ -33,7 +33,7 @@ class TrackSharedData(
 
     override fun describeContents() = 0
 
-    override fun toString() = "TrackData($trackName, $authorName) "
+    override fun toString() = "TrackData($trackName, $authorName, $trackUrl) "
 
     companion object CREATOR : Parcelable.Creator<TrackSharedData> {
         override fun createFromParcel(parcel: Parcel): TrackSharedData {

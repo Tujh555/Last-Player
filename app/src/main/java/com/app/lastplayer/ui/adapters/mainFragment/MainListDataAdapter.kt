@@ -8,32 +8,30 @@ import com.app.lastplayer.databinding.AlbumListItemBinding
 import com.app.lastplayer.databinding.AuthorListItemBinding
 import com.app.lastplayer.databinding.FeedListItemBinding
 import com.app.lastplayer.databinding.PlaylistListItemBinding
+import com.app.lastplayer.di.clickListenersComponent.AlbumClickListener
+import com.app.lastplayer.di.clickListenersComponent.AuthorClickListener
+import com.app.lastplayer.di.clickListenersComponent.FeedCliclListener
+import com.app.lastplayer.di.clickListenersComponent.PlaylistClickListener
 import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 import com.app.lastplayer.ui.adapters.viewHolders.AlbumViewHolder
 import com.app.lastplayer.ui.adapters.viewHolders.AuthorViewHolder
 import com.app.lastplayer.ui.adapters.viewHolders.FeedViewHolder
 import com.app.lastplayer.ui.adapters.viewHolders.PlaylistViewHolder
+import javax.inject.Inject
 
-class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MainListDataAdapter(
+    private val albumClickListener: ImageClickListener?,
+    private val authorClickListener: ImageClickListener?,
+    private val playlistClickListener: ImageClickListener?,
+    private val feedClickListener: ImageClickListener?,
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mainDataList = mutableListOf<MainListData>()
-    private val types = MainDataType.values().map { it.ordinal }.toSet()
-    private val imageClickListeners = mutableMapOf<Int, ImageClickListener>()
 
     fun setList(list: List<MainListData>) {
         mainDataList.clear()
         mainDataList.addAll(list)
         notifyDataSetChanged()
-    }
-
-    fun setClickListeners(map: Map<Int, ImageClickListener>) {
-        map.forEach { (key, value) ->
-            if (!types.contains(key)) {
-                throw IllegalArgumentException("Unknown Data Type")
-            }
-
-            imageClickListeners[key] = value
-        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -77,25 +75,25 @@ class MainListDataAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             MainDataType.ALBUM.ordinal -> {
                 (holder as AlbumViewHolder).bind(
                     item as MainListData.AlbumItem,
-                    imageClickListeners[holder.itemViewType]
+                    albumClickListener
                 )
             }
             MainDataType.AUTHOR.ordinal -> {
                 (holder as AuthorViewHolder).bind(
                     item as MainListData.AuthorItem,
-                    imageClickListeners[holder.itemViewType]
+                    authorClickListener
                 )
             }
             MainDataType.FEED.ordinal -> {
                 (holder as FeedViewHolder).bind(
                     item as MainListData.FeedItem,
-                    imageClickListeners[holder.itemViewType]
+                    feedClickListener
                 )
             }
             MainDataType.PLAYLIST.ordinal -> {
                 (holder as PlaylistViewHolder).bind(
                     item as MainListData.PlaylistItem,
-                    imageClickListeners[holder.itemViewType]
+                    playlistClickListener
                 )
             }
         }

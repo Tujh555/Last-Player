@@ -1,8 +1,8 @@
-package com.app.lastplayer.di
+package com.app.lastplayer.di.appComponent
 
 import android.content.Context
 import android.support.v4.media.MediaMetadataCompat
-import com.app.lastplayer.di.modules.MainModule
+import com.app.lastplayer.di.appComponent.modules.MainModule
 import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.*
 import com.app.lastplayer.ui.fragments.detailed.AlbumDetailedFragment

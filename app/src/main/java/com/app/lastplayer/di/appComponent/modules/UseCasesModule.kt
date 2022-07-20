@@ -1,4 +1,4 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
 import com.app.lastplayer.usecases.*
 import com.app.lastplayer.usecases.impl.*

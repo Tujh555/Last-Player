@@ -1,6 +1,6 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
-import com.app.lastplayer.di.modules.viewModels.ViewModelModule
+import com.app.lastplayer.di.appComponent.modules.viewModels.ViewModelModule
 import dagger.Module
 
 @Module(

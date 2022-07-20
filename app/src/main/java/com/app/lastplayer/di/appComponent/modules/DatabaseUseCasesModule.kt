@@ -1,11 +1,11 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
 import com.app.lastplayer.usecases.database.DeleteTrackUseCase
-import com.app.lastplayer.usecases.database.GetUserWithTracksUseCase
+import com.app.lastplayer.usecases.database.GetUserTracksUseCase
 import com.app.lastplayer.usecases.database.InsertTrackUseCase
 import com.app.lastplayer.usecases.database.InsertUserUseCase
 import com.app.lastplayer.usecases.impl.database.DeleteTrackUseCaseImpl
-import com.app.lastplayer.usecases.impl.database.GetUserWithTracksUseCaseImpl
+import com.app.lastplayer.usecases.impl.database.GetUserTracksUseCaseImpl
 import com.app.lastplayer.usecases.impl.database.InsertTrackUseCaseImpl
 import com.app.lastplayer.usecases.impl.database.InsertUserUseCaseImpl
 import dagger.Binds
@@ -15,9 +15,9 @@ import dagger.Module
 interface DatabaseUseCasesModule {
 
     @Binds
-    fun bindGetUserWithTracksUseCase(
-        getUserWithTracksUseCase: GetUserWithTracksUseCaseImpl
-    ): GetUserWithTracksUseCase
+    fun bindGetUserTracksUseCase(
+        getUserTracksUseCase: GetUserTracksUseCaseImpl
+    ): GetUserTracksUseCase
 
     @Binds
     fun bindTrackUserUseCase(

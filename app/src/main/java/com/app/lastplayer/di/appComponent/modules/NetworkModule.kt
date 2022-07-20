@@ -1,4 +1,4 @@
-package com.app.lastplayer.di.modules
+package com.app.lastplayer.di.appComponent.modules
 
 import android.content.Context
 import com.app.lastplayer.Constants.BASE_JAMENDO_URL

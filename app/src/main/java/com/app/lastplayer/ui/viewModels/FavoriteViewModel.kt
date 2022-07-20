@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.app.lastplayer.data.remote.Track
 import com.app.lastplayer.database.entities.TrackEntity
 import com.app.lastplayer.usecases.database.DeleteTrackUseCase
-import com.app.lastplayer.usecases.database.GetUserWithTracksUseCase
+import com.app.lastplayer.usecases.database.GetUserTracksUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(
     private val deleteTrackUseCase: DeleteTrackUseCase,
-    private val getUserWithTracksUseCase: GetUserWithTracksUseCase
+    private val getUserTracksUseCase: GetUserTracksUseCase
 ) : ViewModel() {
     private val _tracks = MutableStateFlow(listOf<Track>())
     val tracks = _tracks.asStateFlow()
@@ -26,7 +26,7 @@ class FavoriteViewModel @Inject constructor(
 
     fun getUserTracks(uid: String) {
         viewModelScope.launch {
-            getUserWithTracksUseCase(uid).collect { lst ->
+            getUserTracksUseCase(uid).collect { lst ->
                 _tracks.emit(lst.map { it.toTrack() })
             }
         }
