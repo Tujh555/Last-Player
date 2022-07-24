@@ -16,7 +16,8 @@ class InsertTrackUseCaseImpl @Inject constructor(
     override suspend fun invoke(userId: String, track: TrackEntity) {
         withContext(Dispatchers.IO) {
             Log.d("MyLogs", "insertTrackUseCase = ${track.name}")
-            databaseRepository.insertTrack(track)
+
+            databaseRepository.insertTrack(track, userId)
         }
     }
 }

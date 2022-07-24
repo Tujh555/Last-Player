@@ -27,11 +27,12 @@ import kotlin.IllegalStateException
 
 class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
-    private val auth = FirebaseAuth.getInstance()
-    private var user = FirebaseAuth.getInstance().currentUser
     private val viewModel by viewModels<LoginFragmentViewModel> {
         factory
     }
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
@@ -63,7 +64,7 @@ class LoginFragment : Fragment() {
                     ).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             viewModel.insertUser(
-                                user?.uid ?: UUID.randomUUID().toString()
+                                auth.currentUser?.uid!!
                             )
 
                             goToNextFragment()
@@ -88,7 +89,7 @@ class LoginFragment : Fragment() {
                         if (task.isSuccessful) {
 
                             viewModel.insertUser(
-                                user?.uid ?: UUID.randomUUID().toString()
+                                auth.currentUser?.uid!!
                             )
                             goToNextFragment()
                             showToast("SignIn successful")
@@ -114,7 +115,7 @@ class LoginFragment : Fragment() {
 
     private fun goToNextFragment() {
         lifecycleScope.launch {
-            delay(300L)
+            delay(500L)
             R.id.action_global_mainFragment.also {
                 findNavController().navigate(it)
             }

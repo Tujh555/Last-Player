@@ -17,9 +17,8 @@ class DatabaseModule {
         Room.databaseBuilder(
             appContext,
             Database::class.java,
-            "track-db"
-        ).fallbackToDestructiveMigration()
-            .build()
+            "User's track database"
+        ).build()
 
     @Provides
     fun provideUserDao(database: Database): UserDao = database.userDao()

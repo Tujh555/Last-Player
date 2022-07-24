@@ -42,16 +42,6 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
         connector.onClickTrack(data, position)
     }
 
-    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
-        Toast.makeText(
-            requireContext(),
-            "Added",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        viewModel.insertTrack(track)
-    }
-
     @Inject
     lateinit var trackAdapter: TrackAdapter
 
@@ -63,6 +53,16 @@ class AlbumDetailedFragment : Fragment(R.layout.fragment_detailed_album) {
 
     @Inject
     lateinit var auth: FirebaseAuth
+
+    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
+        Toast.makeText(
+            requireContext(),
+            "Added",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        viewModel.insertTrack(requireNotNull(auth.uid), track)
+    }
 
 
     override fun onAttach(context: Context) {

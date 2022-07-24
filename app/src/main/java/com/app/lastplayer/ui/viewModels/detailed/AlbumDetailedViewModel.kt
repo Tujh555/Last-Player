@@ -21,9 +21,9 @@ class AlbumDetailedViewModel @Inject constructor(
     private val _tracksList = MutableStateFlow(listOf<Track>())
     val trackList = _tracksList.asStateFlow()
 
-    fun insertTrack(track: TrackEntity) {
+    fun insertTrack(uid: String, track: TrackEntity) {
         viewModelScope.launch {
-            insertTrackUseCase(track.userKey, track)
+            insertTrackUseCase(uid, track)
         }
     }
 

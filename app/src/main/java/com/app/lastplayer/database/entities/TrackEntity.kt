@@ -14,7 +14,6 @@ data class TrackEntity(
     val author: String,
     val duration: String,
     val album: String,
-    val userKey: String
 ) {
 
     fun toTrack() = Track(

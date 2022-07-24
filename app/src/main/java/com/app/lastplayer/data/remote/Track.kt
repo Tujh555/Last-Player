@@ -50,7 +50,7 @@ data class Track(
             duration = duration
         )
 
-    fun toTrackEntity(userKey: String) = TrackEntity(
+    fun toTrackEntity() = TrackEntity(
         trackId = id,
         name = name,
         audio = audioUrl,
@@ -58,6 +58,5 @@ data class Track(
         duration = duration,
         image = image,
         album = albumName,
-        userKey = userKey
     )
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -52,8 +53,8 @@ class FavoritesFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
 
-        viewModel.deleteTrack(it)
-        trackAdapter.removeTrack(it.toTrack())
+        viewModel.deleteTrack(it, requireNotNull(auth.uid))
+        trackAdapter.removeTrack(it.trackId)
     }
 
     private val trackClickListener = TrackClickListener { data, position ->
@@ -69,10 +70,7 @@ class FavoritesFragment : Fragment() {
             trackAdapter.filterList(p0?.toString() ?: "")
         }
 
-        override fun afterTextChanged(p0: Editable?) {
-
-        }
-
+        override fun afterTextChanged(p0: Editable?) {}
     }
 
     private var user: FirebaseUser? = null
@@ -118,7 +116,10 @@ class FavoritesFragment : Fragment() {
         binding?.run {
             loginButton.setOnClickListener(loginButtonClickListener)
 
-            searchEditText.addTextChangedListener(textWatcher)
+            //searchEditText.addTextChangedListener(textWatcher)
+            searchEditText.doOnTextChanged { text, _, _, _ ->
+                trackAdapter.filterList(text?.toString() ?: "")
+            }
 
             tracksList.adapter = trackAdapter
             tracksList.layoutManager = LinearLayoutManager(requireContext())

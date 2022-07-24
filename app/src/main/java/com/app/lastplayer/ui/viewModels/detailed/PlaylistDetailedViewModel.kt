@@ -23,9 +23,9 @@ class PlaylistDetailedViewModel @Inject constructor(
         private set
     val trackList = _tracksList.asStateFlow()
 
-    fun insertTrack(track: TrackEntity) {
+    fun insertTrack(uid: String, track: TrackEntity) {
         viewModelScope.launch(exceptionHandler) {
-            insertTrackUseCase(track.userKey, track)
+            insertTrackUseCase(uid, track)
         }
     }
 

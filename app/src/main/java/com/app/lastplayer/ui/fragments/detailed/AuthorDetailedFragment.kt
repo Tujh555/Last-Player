@@ -42,16 +42,6 @@ class AuthorDetailedFragment : Fragment() {
         connector.onClickTrack(data, position)
     }
 
-    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
-        Toast.makeText(
-            requireContext(),
-            "Added",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        viewModel.insertTrack(track)
-    }
-
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
@@ -63,6 +53,16 @@ class AuthorDetailedFragment : Fragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth
+
+    private val addToFavoritesClickListener = AddToFavoritesClickListener { track ->
+        Toast.makeText(
+            requireContext(),
+            "Added",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        viewModel.insertTrack(requireNotNull(auth.uid), track)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

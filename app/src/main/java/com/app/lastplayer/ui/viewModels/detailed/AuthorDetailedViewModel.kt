@@ -21,9 +21,9 @@ class AuthorDetailedViewModel @Inject constructor(
     private val _tracksList = MutableStateFlow(listOf<Track>())
     val trackList = _tracksList.asStateFlow()
 
-    fun insertTrack(track: TrackEntity) {
+    fun insertTrack(uid: String, track: TrackEntity) {
         viewModelScope.launch(exceptionHandler) {
-            insertTrackUseCase(track.trackId, track)
+            insertTrackUseCase(uid, track)
         }
     }
 

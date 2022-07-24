@@ -2,6 +2,7 @@ package com.app.lastplayer.di.appComponent
 
 import android.content.Context
 import android.support.v4.media.MediaMetadataCompat
+import com.app.lastplayer.MainActivity
 import com.app.lastplayer.di.appComponent.modules.MainModule
 import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.*
@@ -20,6 +21,7 @@ import javax.inject.Singleton
 @Component(modules = [ MainModule::class ])
 @Singleton
 interface AppComponent {
+    fun inject(activity: MainActivity)
     fun inject(fragment: MainFragment)
     fun inject(fragment: AlbumDetailedFragment)
     fun inject(fragment: MoreAlbumsFragment)

@@ -9,12 +9,12 @@ import com.app.lastplayer.database.entities.UserWithTracks
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM TrackEntity WHERE userKey = (:id)")
-    suspend fun getUserTracks(id: String): List<TrackEntity>
+    @Query("SELECT * FROM TrackEntity")
+    suspend fun getUserTracks(): List<TrackEntity>
 
     @Transaction
     @Query("SELECT * FROM UserEntity WHERE uid = (:id)")
-    fun getUserWithTrack(id: String): UserWithTracks
+    fun getUserWithTrack(id: String): UserWithTracks?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: UserEntity)

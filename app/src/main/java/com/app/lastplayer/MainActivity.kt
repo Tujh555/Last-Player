@@ -18,6 +18,8 @@ import com.app.lastplayer.databinding.ActivityMainBinding
 import com.app.lastplayer.media.PlaybackService
 import com.app.lastplayer.ui.fragments.ControlFragment
 import com.app.lastplayer.ui.fragments.MainFragment
+import com.google.firebase.auth.FirebaseAuth
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), ServiceConnector {
@@ -92,6 +94,9 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        applicationContext.appComponent.inject(this)
+
     }
 
     override fun onStart() {
@@ -158,6 +163,15 @@ class MainActivity : AppCompatActivity(), ServiceConnector {
             _mediaController = null
 
             unbindService(serviceConnection)
+        }
+    }
+
+    @Inject
+    fun checkAuthentication(auth: FirebaseAuth) {
+        Log.d("MyLogs", "Main Activity ${auth.currentUser}")
+
+        if (auth.currentUser == null) {
+            auth.signOut()
         }
     }
 

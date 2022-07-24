@@ -21,8 +21,6 @@ class TrackAdapter @Inject constructor(
 ) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     private val trackList = mutableListOf<Track>()
     private val trackListCopy by lazy { trackList.toList() }
-    val tracksCount: Int
-        get() = trackList.size
 
     var trackClickListener: TrackClickListener? = null
     var addToFavoritesClickListener: AddToFavoritesClickListener? = null
@@ -48,11 +46,11 @@ class TrackAdapter @Inject constructor(
         setList(newList)
     }
 
-    fun removeTrack(track: Track) {
+    fun removeTrack(trackId: String) {
         var ind = -1
 
         for (i in trackList.indices) {
-            if (trackList[i].id == track.id) {
+            if (trackList[i].id == trackId) {
                 trackList.removeAt(i)
                 ind = i
                 break
@@ -89,13 +87,6 @@ class TrackAdapter @Inject constructor(
                     .placeholder(R.drawable.ic_baseline_music_note_24)
                     .into(trackImage)
 
-                trackImage.setOnClickListener {
-                    trackClickListener?.click(
-                        trackList.map { it.sharedData },
-                        bindingAdapterPosition
-                    )
-                }
-
                 if (removeFromFavoritesClickListener == null) {
                     addToFavorites.visibility = View.VISIBLE
                     removeFromFavorites.visibility = View.GONE
@@ -104,21 +95,38 @@ class TrackAdapter @Inject constructor(
                     removeFromFavorites.visibility = View.VISIBLE
                 }
 
-                removeFromFavorites.setOnClickListener {
-                    auth.currentUser?.let {
-                        removeFromFavoritesClickListener?.click(track.toTrackEntity(it.uid))
-                    }
-                }
-
-                addToFavorites.setOnClickListener {
-                    auth.currentUser?.let {
-                        addToFavoritesClickListener?.click(track.toTrackEntity(it.uid))
-                    }
+                if (auth.currentUser == null) {
+                    addToFavorites.visibility = View.GONE
+                    removeFromFavorites.visibility = View.GONE
                 }
 
                 trackName.text = track.name
                 authorName.text = track.authorName
                 trackDuration.text = track.duration.toTrackDuration()
+
+                if (track.audioUrl.isNotBlank()) {
+
+                    trackImage.setOnClickListener {
+                        trackClickListener?.click(
+                            trackList.map { it.sharedData },
+                            bindingAdapterPosition
+                        )
+                    }
+
+                    removeFromFavorites.setOnClickListener {
+                        auth.currentUser?.let {
+                            removeFromFavoritesClickListener?.click(track.toTrackEntity())
+                        }
+                    }
+
+                    addToFavorites.setOnClickListener {
+                        auth.currentUser?.let {
+                            addToFavoritesClickListener?.click(track.toTrackEntity())
+                        }
+                    }
+                } else {
+                    root.alpha = 0.5f
+                }
             }
         }
     }

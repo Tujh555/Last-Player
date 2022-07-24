@@ -12,7 +12,7 @@ class DeleteTrackUseCaseImpl @Inject constructor(
 ) : DeleteTrackUseCase {
     override suspend fun invoke(userId: String, track: TrackEntity) {
         withContext(Dispatchers.IO) {
-            databaseRepository.deleteTrack(track)
+            databaseRepository.deleteTrack(track, userId)
         }
     }
 }
