@@ -23,6 +23,7 @@ import com.app.lastplayer.ui.MainDataType
 import com.app.lastplayer.ui.adapters.clickListeners.ImageClickListener
 import com.app.lastplayer.ui.adapters.mainFragment.MainListAdapter
 import com.app.lastplayer.ui.viewModels.MainViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -85,6 +86,10 @@ class MainFragment : Fragment() {
         }
     }
 
+    private val initCallback = MainViewModel.InitialCallback {
+        binding?.progressBar?.visibility = View.GONE
+    }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -96,6 +101,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState?.getBoolean(IS_FLIPPED_KEY) != true) {
+            viewModel.initialCallback = initCallback
             viewModel.initListItems()
         }
 
@@ -119,26 +125,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        mainListAdapter.setImageClickListenerOn(
-//            MainDataType.ALBUM.ordinal,
-//            albumImageClickListener
-//        )
-//
-//        mainListAdapter.setImageClickListenerOn(
-//            MainDataType.AUTHOR.ordinal,
-//            authorImageClickListener
-//        )
-//
-//        mainListAdapter.setImageClickListenerOn(
-//            MainDataType.PLAYLIST.ordinal,
-//            playlistImageClickListener
-//        )
-//
-//        mainListAdapter.setImageClickListenerOn(
-//            MainDataType.FEED.ordinal,
-//            feedImageClickListener
-//        )
 
         mainListAdapter.seeMoreClickListener = seeMoreClickListener
         mainListAdapter.clickListenerComponent = clickListenersComponent
@@ -172,8 +158,11 @@ class MainFragment : Fragment() {
 
     private fun getListItems() {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            Log.d("LifeCycle", "GetListItems")
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                Log.d("LifeCycle", "RepeatOnLifecycle")
                 viewModel.mainListItems.collect { items ->
+                    Log.d("LifeCycle", "Collect")
                     mainListAdapter.setList(items)
                 }
             }

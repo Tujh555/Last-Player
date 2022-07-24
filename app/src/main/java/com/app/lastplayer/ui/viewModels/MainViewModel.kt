@@ -28,6 +28,7 @@ class MainViewModel @Inject constructor(
     private val items = mutableListOf<MainListItem>()
 
     val mainListItems = _mainListItems.asStateFlow()
+    var initialCallback: InitialCallback? = null
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         Log.e("MyLogs", "$throwable in $coroutineContext")
@@ -90,6 +91,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun initListItems() {
+
         viewModelScope.launch(exceptionHandler) {
             getAlbumsUseCase().collect(albumCollector)
 
@@ -100,6 +102,11 @@ class MainViewModel @Inject constructor(
             getFeedsUseCase().collect(feedsCollector)
 
             _mainListItems.emit(items)
+            initialCallback?.onInit()
         }
+    }
+
+    fun interface InitialCallback {
+        fun onInit()
     }
 }

@@ -1,5 +1,6 @@
 package com.app.lastplayer.ui.adapters.mainFragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.lastplayer.data.MainListData
 import com.app.lastplayer.data.MainListItem
+import com.app.lastplayer.databinding.FragmentMainBinding
 import com.app.lastplayer.databinding.ItemMainListBinding
 import com.app.lastplayer.di.clickListenersComponent.ClickListenersComponent
 import dagger.Lazy

@@ -63,16 +63,6 @@ class FavoritesFragment : Fragment() {
         connector.onClickTrack(data, position)
     }
 
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            trackAdapter.filterList(p0?.toString() ?: "")
-        }
-
-        override fun afterTextChanged(p0: Editable?) {}
-    }
-
     private var user: FirebaseUser? = null
 
     private val loginButtonClickListener = View.OnClickListener {
@@ -116,7 +106,6 @@ class FavoritesFragment : Fragment() {
         binding?.run {
             loginButton.setOnClickListener(loginButtonClickListener)
 
-            //searchEditText.addTextChangedListener(textWatcher)
             searchEditText.doOnTextChanged { text, _, _, _ ->
                 trackAdapter.filterList(text?.toString() ?: "")
             }
